@@ -5,7 +5,10 @@ import { DesktopNav } from "@/components/desktop-nav";
 import { MobileNav } from "@/components/mobile-nav";
 
 export async function SiteHeader() {
-  const isAdmin = await hasAdminSession();
+  const isAdmin = await hasAdminSession().catch((error) => {
+    console.error("Failed to check admin session", error);
+    return false;
+  });
 
   return (
     <header className="sticky top-0 z-40 border-b border-border bg-white/94 backdrop-blur">
