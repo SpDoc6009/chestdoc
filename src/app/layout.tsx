@@ -4,8 +4,19 @@ import { ReadingProgress } from "@/components/reading-progress";
 import { SiteFooter } from "@/components/site-footer";
 import { SiteHeader } from "@/components/site-header";
 
+function siteUrl() {
+  const rawUrl = process.env.NEXT_PUBLIC_SITE_URL?.trim().replace(/^["']|["']$/g, "");
+  if (!rawUrl) return new URL("http://localhost:3000");
+
+  try {
+    return new URL(rawUrl.startsWith("http") ? rawUrl : `https://${rawUrl}`);
+  } catch {
+    return new URL("http://localhost:3000");
+  }
+}
+
 export const metadata: Metadata = {
-  metadataBase: new URL(process.env.NEXT_PUBLIC_SITE_URL || "http://localhost:3000"),
+  metadataBase: siteUrl(),
   title: {
     default: "在胸腔重症裡，陪你找回自然的呼吸",
     template: "%s | 在胸腔重症裡，陪你找回自然的呼吸"
