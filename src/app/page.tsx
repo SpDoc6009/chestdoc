@@ -123,7 +123,19 @@ async function getHomeData() {
 }
 
 export default async function HomePage() {
-  const { articles, educationArticles, reports, teachingLessons, pdfs, links, popularKeywords } = await getHomeData();
+  const homeData = await getHomeData().catch((error) => {
+    console.error("Failed to load home data", error);
+    return null;
+  });
+  const { articles, educationArticles, reports, teachingLessons, pdfs, links, popularKeywords } = homeData ?? {
+    articles: [],
+    educationArticles: [],
+    reports: [],
+    teachingLessons: [],
+    pdfs: [],
+    links: [],
+    popularKeywords: []
+  };
   const recentUpdates = [
     ...articles.slice(0, 3).map((item) => ({ title: item.title, href: `/articles/${item.id}`, date: item.updatedAt, type: "圖文解說" })),
     ...reports.slice(0, 3).map((item) => ({ title: item.title, href: `/reports/${item.slug}`, date: item.updatedAt, type: "醫學新知" })),
@@ -182,6 +194,14 @@ export default async function HomePage() {
           </div>
         </div>
       </section>
+
+      {!homeData ? (
+        <section className="section-shell py-10">
+          <div className="rounded-lg border border-amber-200 bg-amber-50 p-5 text-sm leading-7 text-amber-900">
+            網站內容資料庫暫時無法連線。請稍後再試，或聯絡網站管理者確認資料庫設定。
+          </div>
+        </section>
+      ) : null}
 
       <section className="section-shell py-10">
         {popularKeywords.length > 0 ? (
