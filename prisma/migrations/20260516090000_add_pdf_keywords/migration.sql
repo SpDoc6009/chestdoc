@@ -1,0 +1,1 @@
+ALTER TABLE "PdfDocument" ADD COLUMN "keywords" TEXT[] NOT NULL DEFAULT ARRAY[]::TEXT[];

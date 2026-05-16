@@ -1,0 +1,17 @@
+{
+  "name": "在胸腔重症裡，陪你找回自然的呼吸",
+  "short_name": "自然呼吸",
+  "description": "胸腔科醫學筆記、指南整理、AI 深度研究報告、衛教資料整理",
+  "start_url": "/",
+  "display": "standalone",
+  "background_color": "#f8fbff",
+  "theme_color": "#174c8f",
+  "icons": [
+    {
+      "src": "/icon.svg",
+      "sizes": "any",
+      "type": "image/svg+xml",
+      "purpose": "any maskable"
+    }
+  ]
+}

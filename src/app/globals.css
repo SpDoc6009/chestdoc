@@ -1,0 +1,152 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  :root {
+    --background: 210 40% 99%;
+    --foreground: 215 45% 17%;
+    --card: 0 0% 100%;
+    --card-foreground: 215 45% 17%;
+    --primary: 213 72% 31%;
+    --primary-foreground: 210 40% 98%;
+    --secondary: 204 42% 93%;
+    --secondary-foreground: 214 50% 22%;
+    --muted: 210 24% 95%;
+    --muted-foreground: 215 16% 43%;
+    --accent: 200 58% 92%;
+    --accent-foreground: 214 50% 24%;
+    --border: 210 22% 88%;
+    --input: 210 22% 84%;
+    --ring: 207 90% 54%;
+  }
+
+  * {
+    @apply border-border;
+  }
+
+  body {
+    font-family: "Noto Sans TC", "Microsoft JhengHei", "PingFang TC", "Heiti TC", Arial, sans-serif;
+    background-image:
+      linear-gradient(hsl(210 22% 88% / 0.28) 1px, transparent 1px),
+      linear-gradient(90deg, hsl(210 22% 88% / 0.22) 1px, transparent 1px);
+    background-size: 44px 44px;
+    @apply bg-background text-foreground antialiased;
+  }
+}
+
+@layer components {
+  .section-shell {
+    @apply mx-auto w-full max-w-6xl px-4 sm:px-6 lg:px-8;
+  }
+
+  .medical-panel {
+    @apply border-y border-border bg-gradient-to-b from-white to-blue-50/45;
+  }
+
+  .section-title {
+    @apply flex items-center gap-3 text-2xl font-semibold tracking-normal;
+  }
+
+  .section-title::before {
+    content: "";
+    @apply h-6 w-1.5 rounded-full bg-primary;
+  }
+
+  .hero-hand-title {
+    font-family: "HanziPen TC", "Kaiti TC", "FZKai-Z03", "STKaiti", "KaiTi", "DFKai-SB", "BiauKai", "Noto Serif TC", serif;
+    font-weight: 500;
+    letter-spacing: 0.02em;
+    line-height: 1.25;
+    text-shadow: 0 1px 0 rgb(255 255 255 / 0.9), 0 10px 28px rgb(23 76 143 / 0.12);
+  }
+
+  .detail-hero {
+    @apply relative overflow-hidden rounded-lg border border-border bg-gradient-to-br from-white via-white to-blue-50/70 p-6 shadow-sm sm:p-8;
+  }
+
+  .detail-hero > * {
+    @apply relative z-10;
+  }
+
+  .detail-hero::before {
+    content: "";
+    @apply absolute inset-x-0 top-0 h-1.5 bg-gradient-to-r from-blue-700 via-sky-500 to-cyan-400;
+  }
+
+  .detail-hero::after {
+    content: "";
+    background-image:
+      linear-gradient(hsl(207 90% 54% / 0.08) 1px, transparent 1px),
+      linear-gradient(90deg, hsl(207 90% 54% / 0.08) 1px, transparent 1px);
+    background-size: 28px 28px;
+    @apply absolute inset-0 z-0 opacity-70;
+  }
+
+  .reader-prose {
+    @apply prose prose-slate max-w-none prose-headings:scroll-mt-24 prose-headings:tracking-normal prose-a:text-primary prose-img:rounded-lg prose-img:border prose-img:border-border prose-img:shadow-sm;
+  }
+
+  .reader-prose h2 {
+    @apply mt-12 border-l-4 border-primary pl-4 text-2xl;
+  }
+
+  .reader-prose h3 {
+    @apply mt-8 text-xl text-slate-800;
+  }
+
+  .reader-prose blockquote {
+    @apply rounded-lg border-l-4 border-sky-400 bg-blue-50/70 px-5 py-3 not-italic text-slate-700;
+  }
+
+  .reader-prose table {
+    @apply overflow-hidden rounded-lg border border-border text-sm;
+  }
+
+  .reader-prose thead {
+    @apply bg-blue-50;
+  }
+
+  .reader-prose th {
+    @apply text-slate-800;
+  }
+
+  .viewer-frame {
+    @apply mt-8 overflow-hidden rounded-lg border border-border bg-white shadow-sm ring-1 ring-blue-50;
+  }
+
+  .viewer-frame::before {
+    content: "";
+    @apply block h-1.5 bg-gradient-to-r from-blue-700 via-sky-500 to-cyan-400;
+  }
+}
+
+@media print {
+  body {
+    background: white !important;
+  }
+
+  header,
+  footer,
+  .viewer-frame,
+  .print\:hidden {
+    display: none !important;
+  }
+
+  .section-shell {
+    max-width: none !important;
+    padding-left: 0 !important;
+    padding-right: 0 !important;
+  }
+
+  .detail-hero {
+    border: 0 !important;
+    box-shadow: none !important;
+    padding: 0 0 1rem 0 !important;
+  }
+
+  .detail-hero::before,
+  .detail-hero::after {
+    display: none !important;
+  }
+}
