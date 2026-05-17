@@ -48,7 +48,14 @@ export default async function AdminArticlesPage({
   const articles = await prisma.article.findMany({
     where,
     orderBy: { updatedAt: "desc" },
-    include: { category: true, subcategory: true }
+    select: {
+      id: true,
+      title: true,
+      isPublished: true,
+      updatedAt: true,
+      category: { select: { name: true } },
+      subcategory: { select: { name: true } }
+    }
   });
 
   return (
