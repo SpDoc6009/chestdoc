@@ -19,7 +19,7 @@ const adminNav = [
 export function AdminShell({ title, children }: { title: string; children: React.ReactNode }) {
   return (
     <main className="section-shell py-8">
-      <div className="mb-6 flex flex-col gap-4 border-b border-border pb-5 lg:flex-row lg:items-center lg:justify-between">
+      <div className="print:hidden mb-6 flex flex-col gap-4 border-b border-border pb-5 lg:flex-row lg:items-center lg:justify-between">
         <div>
           <p className="text-sm font-medium text-primary">後台管理</p>
           <h1 className="mt-1 text-3xl font-semibold tracking-normal text-slate-900">{title}</h1>
@@ -28,7 +28,7 @@ export function AdminShell({ title, children }: { title: string; children: React
           <Button type="submit" variant="outline">登出</Button>
         </form>
       </div>
-      <nav className="mb-7 flex flex-wrap gap-2">
+      <nav className="print:hidden mb-7 flex flex-wrap gap-2">
         {adminNav.map((item) => (
           <Link
             key={item.href}

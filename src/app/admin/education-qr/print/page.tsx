@@ -2,12 +2,10 @@ import Link from "next/link";
 import { AdminShell } from "@/components/admin-shell";
 import { PrintButton } from "@/components/print-button";
 import { Card, CardContent } from "@/components/ui/card";
-import { educationTopicOptions, getEducationTopicValueFromKeywords } from "@/lib/education-topics";
 import { requireAdmin } from "@/lib/auth";
 import { prisma } from "@/lib/prisma";
 import { createQrSvg } from "@/lib/qr-code";
 import { getSiteUrl } from "@/lib/site-url";
-import { formatDate } from "@/lib/utils";
 
 export const metadata = {
   title: "衛教 QR Code 列印"
@@ -19,11 +17,6 @@ function idsFromSearchParams(ids?: string | string[]) {
     .flatMap((value) => value.split(","))
     .map((value) => value.trim())
     .filter(Boolean);
-}
-
-function topicLabel(keywords: string[]) {
-  const value = getEducationTopicValueFromKeywords(keywords);
-  return educationTopicOptions.find((topic) => topic.value === value)?.label ?? "衛教資料";
 }
 
 function qrSvg(url: string) {
@@ -53,10 +46,7 @@ export default async function EducationQrPrintPage({
         orderBy: { title: "asc" },
         select: {
           id: true,
-          title: true,
-          summary: true,
-          updatedAt: true,
-          keywords: true
+          title: true
         }
       })
     : [];
@@ -74,7 +64,7 @@ export default async function EducationQrPrintPage({
       </div>
 
       {articles.length > 0 ? (
-        <div className="grid gap-4 sm:grid-cols-2 print:grid-cols-2">
+        <div className="grid gap-3 sm:grid-cols-2 lg:grid-cols-3 print:grid-cols-3 print:gap-2">
           {articles.map((article) => {
             const url = new URL(`/articles/${article.id}`, siteUrl).toString();
             const svg = qrSvg(url);
@@ -82,15 +72,13 @@ export default async function EducationQrPrintPage({
             return (
               <article
                 key={article.id}
-                className="break-inside-avoid rounded-3xl border border-slate-300 bg-white p-5 shadow-sm print:shadow-none"
+                className="break-inside-avoid rounded-2xl border border-slate-300 bg-white p-3 shadow-sm print:p-2 print:shadow-none"
               >
-                <div className="flex items-start justify-between gap-4">
+                <div className="flex items-center justify-between gap-3">
                   <div className="min-w-0">
-                    <p className="text-xs font-semibold text-[#2f6558]">{topicLabel(article.keywords)}</p>
-                    <h2 className="mt-2 text-xl font-semibold leading-snug text-slate-950">{article.title}</h2>
-                    <p className="mt-2 text-sm leading-6 text-slate-600">{article.summary}</p>
+                    <h2 className="text-base font-semibold leading-snug text-slate-950 print:text-sm">{article.title}</h2>
                   </div>
-                  <div className="w-32 shrink-0 rounded-2xl border border-slate-200 bg-white p-2">
+                  <div className="w-28 shrink-0 rounded-xl border border-slate-200 bg-white p-1.5 print:w-24 print:p-1">
                     {svg ? (
                       <div dangerouslySetInnerHTML={{ __html: svg }} />
                     ) : (
@@ -99,11 +87,6 @@ export default async function EducationQrPrintPage({
                       </div>
                     )}
                   </div>
-                </div>
-                <div className="mt-4 rounded-2xl bg-[#f7f3ea] p-3 text-xs leading-5 text-slate-700">
-                  <p className="font-medium">掃描 QR code 回家閱讀</p>
-                  <p className="mt-1 break-all">{url}</p>
-                  <p className="mt-1 text-slate-500">更新：{formatDate(article.updatedAt)}</p>
                 </div>
               </article>
             );
