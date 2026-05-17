@@ -158,8 +158,8 @@ export default async function HomePage() {
         <div className="section-shell relative flex min-h-[520px] items-center py-14 lg:py-18">
           <div className="max-w-3xl">
             <p className="text-sm font-semibold text-primary">Pulmonary Medicine Notebook</p>
-            <h1 className="hero-hand-title mt-4 text-4xl text-slate-950 sm:text-5xl">
-              在胸腔重症裡，陪你找回自然的呼吸
+            <h1 className="hero-hand-title mt-4 max-w-5xl text-3xl text-slate-950 sm:text-4xl lg:text-5xl">
+              胸腔重症間，陪你找回自然的呼吸
             </h1>
             <p className="mt-5 text-lg leading-8 text-slate-600">
               胸腔科醫學筆記、指南整理、AI 深度研究報告、衛教資料整理

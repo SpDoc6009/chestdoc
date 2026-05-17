@@ -18,12 +18,12 @@ function siteUrl() {
 export const metadata: Metadata = {
   metadataBase: siteUrl(),
   title: {
-    default: "在胸腔重症裡，陪你找回自然的呼吸",
-    template: "%s | 在胸腔重症裡，陪你找回自然的呼吸"
+    default: "胸腔重症間，陪你找回自然的呼吸",
+    template: "%s | 胸腔重症間，陪你找回自然的呼吸"
   },
   description: "胸腔科醫學筆記、指南整理、AI 深度研究報告、衛教資料整理",
   openGraph: {
-    title: "在胸腔重症裡，陪你找回自然的呼吸",
+    title: "胸腔重症間，陪你找回自然的呼吸",
     description: "胸腔科醫學筆記、指南整理、AI 深度研究報告、衛教資料整理",
     type: "website",
     locale: "zh_TW",

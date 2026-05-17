@@ -17,7 +17,7 @@ export async function SiteHeader() {
           <span className="flex h-9 w-9 shrink-0 items-center justify-center rounded-md bg-primary text-primary-foreground">
             <Stethoscope className="h-5 w-5" aria-hidden="true" />
           </span>
-          <span className="min-w-0 max-w-[260px] leading-5 sm:max-w-none">在胸腔重症裡，陪你找回自然的呼吸</span>
+          <span className="min-w-0 max-w-[260px] leading-5 sm:max-w-none">胸腔重症間，陪你找回自然的呼吸</span>
         </Link>
         <MobileNav isAdmin={isAdmin} />
         <DesktopNav isAdmin={isAdmin} />
