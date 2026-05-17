@@ -64,34 +64,42 @@ export default async function EducationQrPrintPage({
       </div>
 
       {articles.length > 0 ? (
-        <div className="grid gap-3 sm:grid-cols-2 lg:grid-cols-3 print:grid-cols-3 print:gap-2">
-          {articles.map((article) => {
-            const url = new URL(`/articles/${article.id}`, siteUrl).toString();
-            const svg = qrSvg(url);
+        <section>
+          <div className="mb-5 text-center print:mb-4">
+            <p className="text-sm font-medium text-[#2f6558] print:hidden">病人返家閱讀清單</p>
+            <h2 className="text-3xl font-semibold tracking-normal text-slate-950 print:text-2xl">
+              胸腔醫學衛教資料
+            </h2>
+          </div>
+          <div className="grid gap-3 sm:grid-cols-2 print:grid-cols-2 print:gap-3">
+            {articles.map((article) => {
+              const url = new URL(`/articles/${article.id}`, siteUrl).toString();
+              const svg = qrSvg(url);
 
-            return (
-              <article
-                key={article.id}
-                className="break-inside-avoid rounded-2xl border border-slate-300 bg-white p-3 shadow-sm print:p-2 print:shadow-none"
-              >
-                <div className="flex items-center justify-between gap-3">
-                  <div className="min-w-0">
-                    <h2 className="text-base font-semibold leading-snug text-slate-950 print:text-sm">{article.title}</h2>
+              return (
+                <article
+                  key={article.id}
+                  className="break-inside-avoid rounded-2xl border border-slate-300 bg-white p-4 shadow-sm print:p-3 print:shadow-none"
+                >
+                  <div className="flex items-center justify-between gap-4">
+                    <div className="min-w-0">
+                      <h2 className="text-lg font-semibold leading-snug text-slate-950 print:text-base">{article.title}</h2>
+                    </div>
+                    <div className="w-36 shrink-0 rounded-xl border border-slate-200 bg-white p-2 print:w-32 print:p-1.5">
+                      {svg ? (
+                        <div dangerouslySetInnerHTML={{ __html: svg }} />
+                      ) : (
+                        <div className="flex aspect-square items-center justify-center text-center text-xs text-slate-500">
+                          網址太長，無法產生 QR
+                        </div>
+                      )}
+                    </div>
                   </div>
-                  <div className="w-28 shrink-0 rounded-xl border border-slate-200 bg-white p-1.5 print:w-24 print:p-1">
-                    {svg ? (
-                      <div dangerouslySetInnerHTML={{ __html: svg }} />
-                    ) : (
-                      <div className="flex aspect-square items-center justify-center text-center text-xs text-slate-500">
-                        網址太長，無法產生 QR
-                      </div>
-                    )}
-                  </div>
-                </div>
-              </article>
-            );
-          })}
-        </div>
+                </article>
+              );
+            })}
+          </div>
+        </section>
       ) : (
         <Card>
           <CardContent className="pt-5">
