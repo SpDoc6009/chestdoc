@@ -13,7 +13,8 @@ const quickLinks = [
     description: "依胸腔疾病分類查找筆記、指南與相關內容。",
     icon: FolderTree,
     accent: "from-blue-600 to-sky-400",
-    bg: "bg-blue-50 text-blue-700"
+    bg: "bg-blue-50 text-blue-700",
+    surface: "bg-blue-50/95 border-blue-100"
   },
   {
     href: "/education",
@@ -21,7 +22,8 @@ const quickLinks = [
     description: "用病人與家屬更容易理解的方式整理照護重點。",
     icon: HeartPulse,
     accent: "from-cyan-500 to-emerald-400",
-    bg: "bg-cyan-50 text-cyan-700"
+    bg: "bg-cyan-50 text-cyan-700",
+    surface: "bg-rose-50/95 border-rose-100"
   },
   {
     href: "/reports",
@@ -29,7 +31,8 @@ const quickLinks = [
     description: "整理胸腔醫學新知、研究摘要與 AI 輔助筆記。",
     icon: Activity,
     accent: "from-indigo-600 to-blue-400",
-    bg: "bg-indigo-50 text-indigo-700"
+    bg: "bg-indigo-50 text-indigo-700",
+    surface: "bg-indigo-50/95 border-indigo-100"
   },
   {
     href: "/pdfs",
@@ -37,7 +40,8 @@ const quickLinks = [
     description: "快速找到指南、表格、講義與臨床速查文件。",
     icon: FileText,
     accent: "from-slate-600 to-blue-400",
-    bg: "bg-slate-100 text-slate-700"
+    bg: "bg-slate-100 text-slate-700",
+    surface: "bg-emerald-50/95 border-emerald-100"
   }
 ];
 
@@ -167,25 +171,25 @@ export default async function HomePage() {
             <div className="mt-8 max-w-2xl">
               <SearchBox />
             </div>
-            <div className="mt-6 grid max-w-4xl gap-3 sm:grid-cols-2 lg:grid-cols-4">
+            <div className="mt-6 grid max-w-4xl grid-cols-2 gap-3 sm:grid-cols-2 lg:grid-cols-4">
               {quickLinks.map((item) => {
                 const Icon = item.icon;
                 return (
                   <Link
                     key={item.href}
                     href={item.href}
-                    className="group overflow-hidden rounded-lg border border-border bg-white/88 shadow-sm backdrop-blur transition-all duration-200 hover:-translate-y-0.5 hover:border-blue-200 hover:bg-white hover:shadow-md"
+                    className={`group aspect-square overflow-hidden rounded-lg border shadow-sm backdrop-blur transition-all duration-200 hover:-translate-y-0.5 hover:border-blue-200 hover:bg-white hover:shadow-md sm:aspect-auto sm:bg-white/88 ${item.surface}`}
                   >
                     <div className={`h-1 bg-gradient-to-r ${item.accent}`} aria-hidden="true" />
-                    <div className="p-4">
-                      <div className="mb-3 flex items-center justify-between gap-3">
-                        <span className={`flex h-10 w-10 items-center justify-center rounded-md ${item.bg}`}>
+                    <div className="flex h-full flex-col items-center justify-center p-3 text-center sm:block sm:p-4 sm:text-left">
+                      <div className="mb-3 flex items-center justify-center gap-3 sm:justify-between">
+                        <span className={`flex h-11 w-11 items-center justify-center rounded-md bg-white/80 shadow-sm sm:h-10 sm:w-10 sm:shadow-none ${item.bg}`}>
                           <Icon className="h-5 w-5" aria-hidden="true" />
                         </span>
-                        <ArrowRight className="h-4 w-4 text-slate-400 transition-transform group-hover:translate-x-1 group-hover:text-primary" aria-hidden="true" />
+                        <ArrowRight className="hidden h-4 w-4 text-slate-400 transition-transform group-hover:translate-x-1 group-hover:text-primary sm:block" aria-hidden="true" />
                       </div>
-                      <h2 className="text-base font-semibold text-slate-950">{item.title}</h2>
-                      <p className="mt-2 line-clamp-2 text-sm leading-6 text-muted-foreground">{item.description}</p>
+                      <h2 className="text-sm font-semibold leading-6 text-slate-950 sm:text-base">{item.title}</h2>
+                      <p className="mt-2 hidden text-sm leading-6 text-muted-foreground sm:line-clamp-2 sm:block">{item.description}</p>
                     </div>
                   </Link>
                 );
