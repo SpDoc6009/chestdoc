@@ -168,7 +168,7 @@ export async function createArticleAction(formData: FormData) {
   const title = value(formData, "title");
   if (!title) throw new Error("Article title is required.");
 
-  await prisma.article.create({
+  const article = await prisma.article.create({
     data: {
       title,
       slug: await uniqueSlug("article", title, value(formData, "slug")),
@@ -185,7 +185,7 @@ export async function createArticleAction(formData: FormData) {
   revalidatePath("/");
   revalidatePath("/articles");
   revalidatePath("/admin/articles");
-  redirect("/admin/articles");
+  redirect(`/admin/articles/${article.id}/edit`);
 }
 
 export async function updateArticleAction(formData: FormData) {
@@ -215,7 +215,8 @@ export async function updateArticleAction(formData: FormData) {
   revalidatePath(`/articles/${id}`);
   revalidatePath(`/articles/${slug}`);
   revalidatePath("/admin/articles");
-  redirect("/admin/articles");
+  revalidatePath(`/admin/articles/${id}/edit`);
+  redirect(`/admin/articles/${id}/edit`);
 }
 
 export async function deleteArticleAction(formData: FormData) {
