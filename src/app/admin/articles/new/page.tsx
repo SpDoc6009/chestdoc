@@ -10,6 +10,7 @@ import { Select } from "@/components/ui/select";
 import { Textarea } from "@/components/ui/textarea";
 import { requireAdmin } from "@/lib/auth";
 import { getCategoryOptions } from "@/lib/data";
+import { educationTopicOptions } from "@/lib/education-topics";
 
 export const metadata = {
   title: "新增圖文解說"
@@ -34,6 +35,7 @@ export default async function NewArticlePage({ searchParams }: { searchParams: P
               defaultValue={isEducation ? "衛教, patient-education, 病人與家屬" : undefined}
               placeholder="例如：guideline, COPD, ILD"
             />
+            {isEducation ? <EducationTopicSelect required /> : null}
             <div className="grid gap-4 md:grid-cols-2">
               <CategorySelect categories={categories} />
               <SubcategorySelect categories={categories} />
@@ -66,6 +68,22 @@ function CategorySelect({ categories }: { categories: Awaited<ReturnType<typeof 
 
 function SubcategorySelect({ categories }: { categories: Awaited<ReturnType<typeof getCategoryOptions>> }) {
   return <div className="space-y-2"><Label htmlFor="subcategoryId">小分類</Label><Select id="subcategoryId" name="subcategoryId"><option value="">未指定</option>{categories.flatMap((category) => category.subcategories.map((subcategory) => <option key={subcategory.id} value={subcategory.id}>{category.name} / {subcategory.name}</option>))}</Select></div>;
+}
+
+function EducationTopicSelect({ required = false }: { required?: boolean }) {
+  return (
+    <div className="space-y-2">
+      <Label htmlFor="educationTopic">衛教主題</Label>
+      <Select id="educationTopic" name="educationTopic" required={required}>
+        <option value="">請選擇衛教主題</option>
+        {educationTopicOptions.map((topic) => (
+          <option key={topic.value} value={topic.value}>
+            {topic.label}
+          </option>
+        ))}
+      </Select>
+    </div>
+  );
 }
 
 function Checks({ featured = false }: { featured?: boolean }) {

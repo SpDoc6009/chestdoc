@@ -4,6 +4,7 @@ import { del, put } from "@vercel/blob";
 import { revalidatePath } from "next/cache";
 import { redirect } from "next/navigation";
 import { clearAdminSessionCookie, requireAdmin, setAdminSessionCookie } from "@/lib/auth";
+import { educationTopicKeywords, getEducationTopicKeyword } from "@/lib/education-topics";
 import { prisma } from "@/lib/prisma";
 import { slugify } from "@/lib/utils";
 
@@ -23,11 +24,19 @@ function nullable(value: string) {
 }
 
 function keywords(formData: FormData) {
-  return value(formData, "keywords")
+  const hasEducationTopicField = formData.has("educationTopic");
+  const selectedEducationTopic = getEducationTopicKeyword(value(formData, "educationTopic"));
+  const rawKeywords = value(formData, "keywords")
     .split(/[,，#\n]/)
     .map((keyword) => keyword.trim().toLowerCase())
     .filter(Boolean)
-    .filter((keyword, index, list) => list.indexOf(keyword) === index);
+    .filter((keyword) => !hasEducationTopicField || !educationTopicKeywords.includes(keyword));
+
+  if (selectedEducationTopic) {
+    rawKeywords.push("衛教", "patient-education", "病人與家屬", selectedEducationTopic);
+  }
+
+  return rawKeywords.filter((keyword, index, list) => list.indexOf(keyword) === index);
 }
 
 async function slugExists(model: SlugModel, slug: string) {

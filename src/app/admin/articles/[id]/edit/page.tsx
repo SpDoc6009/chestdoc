@@ -11,6 +11,7 @@ import { Select } from "@/components/ui/select";
 import { Textarea } from "@/components/ui/textarea";
 import { requireAdmin } from "@/lib/auth";
 import { getCategoryOptions } from "@/lib/data";
+import { educationTopicOptions, getEducationTopicValueFromKeywords } from "@/lib/education-topics";
 import { prisma } from "@/lib/prisma";
 
 export const metadata = {
@@ -36,6 +37,7 @@ export default async function EditArticlePage({ params }: { params: Promise<{ id
             <Field name="title" label="標題" defaultValue={article.title} required />
             <Field name="slug" label="Slug" defaultValue={article.slug} required />
             <Field name="keywords" label="關鍵字" defaultValue={article.keywords.join(", ")} placeholder="例如：guideline, COPD, ILD" />
+            <EducationTopicSelect defaultValue={getEducationTopicValueFromKeywords(article.keywords)} />
             <div className="grid gap-4 md:grid-cols-2">
               <CategorySelect categories={categories} defaultValue={article.categoryId ?? ""} />
               <SubcategorySelect categories={categories} defaultValue={article.subcategoryId ?? ""} />
@@ -71,4 +73,20 @@ function CategorySelect({ categories, defaultValue }: { categories: Awaited<Retu
 
 function SubcategorySelect({ categories, defaultValue }: { categories: Awaited<ReturnType<typeof getCategoryOptions>>; defaultValue: string }) {
   return <div className="space-y-2"><Label htmlFor="subcategoryId">小分類</Label><Select id="subcategoryId" name="subcategoryId" defaultValue={defaultValue}><option value="">未指定</option>{categories.flatMap((category) => category.subcategories.map((subcategory) => <option key={subcategory.id} value={subcategory.id}>{category.name} / {subcategory.name}</option>))}</Select></div>;
+}
+
+function EducationTopicSelect({ defaultValue }: { defaultValue: string }) {
+  return (
+    <div className="space-y-2">
+      <Label htmlFor="educationTopic">衛教主題（選填）</Label>
+      <Select id="educationTopic" name="educationTopic" defaultValue={defaultValue}>
+        <option value="">不指定衛教主題</option>
+        {educationTopicOptions.map((topic) => (
+          <option key={topic.value} value={topic.value}>
+            {topic.label}
+          </option>
+        ))}
+      </Select>
+    </div>
+  );
 }
