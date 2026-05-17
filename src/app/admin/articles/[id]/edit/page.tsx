@@ -1,6 +1,5 @@
 import type React from "react";
 import { notFound } from "next/navigation";
-import { updateArticleAction } from "@/lib/actions";
 import { AdminShell } from "@/components/admin-shell";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
@@ -32,7 +31,7 @@ export default async function EditArticlePage({ params }: { params: Promise<{ id
       <Card>
         <CardHeader><CardTitle>{article.title}</CardTitle></CardHeader>
         <CardContent>
-          <form action={updateArticleAction} className="grid gap-4">
+          <form action={`/admin/articles/${article.id}/update`} method="post" className="grid gap-4">
             <input type="hidden" name="id" value={article.id} />
             <Field name="title" label="標題" defaultValue={article.title} required />
             <Field name="slug" label="Slug" defaultValue={article.slug} required />

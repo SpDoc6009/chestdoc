@@ -1,7 +1,6 @@
 import type React from "react";
 import Link from "next/link";
 import { notFound } from "next/navigation";
-import { updateTeachingLessonAction } from "@/lib/actions";
 import { AdminShell } from "@/components/admin-shell";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
@@ -36,7 +35,7 @@ export default async function EditTeachingLessonPage({ params }: { params: Promi
               預覽目前已儲存版本
             </Link>
           </div>
-          <form action={updateTeachingLessonAction} className="grid gap-4">
+          <form action={`/admin/teaching/${lesson.id}/update`} method="post" className="grid gap-4">
             <input type="hidden" name="id" value={lesson.id} />
             <Field name="title" label="標題" defaultValue={lesson.title} required />
             <Field name="slug" label="Slug" defaultValue={lesson.slug} required />
