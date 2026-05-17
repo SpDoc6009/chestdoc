@@ -8,6 +8,7 @@ import { PrintButton } from "@/components/print-button";
 import { RelatedContent } from "@/components/related-content";
 import { Badge } from "@/components/ui/badge";
 import { TableOfContents } from "@/components/table-of-contents";
+import { ViewTracker } from "@/components/view-tracker";
 import { hasAdminSession } from "@/lib/auth";
 import { getTeachingLessonBySlug } from "@/lib/data";
 import { createHeadingIdFactory, extractMarkdownHeadings } from "@/lib/markdown";
@@ -43,6 +44,7 @@ export default async function TeachingLessonPage({ params, searchParams }: PageP
 
   return (
     <main className="section-shell py-10">
+      <ViewTracker contentType="teaching" contentId={lesson.id} title={lesson.title} path={`/teaching/lessons/${lesson.id}`} />
       <article className={hasHtml ? "" : "mx-auto max-w-3xl"}>
         <div className="detail-hero">
           <div className="absolute right-6 top-6 z-20">
@@ -72,10 +74,14 @@ export default async function TeachingLessonPage({ params, searchParams }: PageP
                 remarkPlugins={[remarkGfm]}
                 components={{
                   h2({ children }) {
-                    return <h2 id={getHeadingId(reactNodeText(children))}>{children}</h2>;
+                    const text = reactNodeText(children);
+                    if (!text.trim()) return <div className="my-8">{children}</div>;
+                    return <h2 id={getHeadingId(text)}>{children}</h2>;
                   },
                   h3({ children }) {
-                    return <h3 id={getHeadingId(reactNodeText(children))}>{children}</h3>;
+                    const text = reactNodeText(children);
+                    if (!text.trim()) return <div className="my-8">{children}</div>;
+                    return <h3 id={getHeadingId(text)}>{children}</h3>;
                   },
                   blockquote({ children }) {
                     return <MarkdownCallout>{children}</MarkdownCallout>;

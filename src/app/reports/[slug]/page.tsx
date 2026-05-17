@@ -2,6 +2,7 @@ import Link from "next/link";
 import { notFound } from "next/navigation";
 import { RelatedContent } from "@/components/related-content";
 import { Badge } from "@/components/ui/badge";
+import { ViewTracker } from "@/components/view-tracker";
 import { getPublishedReportBySlug } from "@/lib/data";
 import { formatDate } from "@/lib/utils";
 
@@ -20,6 +21,7 @@ export default async function ReportDetailPage({ params }: { params: Promise<{ s
 
   return (
     <main className="section-shell py-10">
+      <ViewTracker contentType="report" contentId={report.id} title={report.title} path={`/reports/${report.id}`} />
       <div className="detail-hero">
         <div className="mb-5 flex flex-wrap gap-2">
           <Badge className="border-indigo-100 bg-indigo-50 text-indigo-800">Medical Update</Badge>

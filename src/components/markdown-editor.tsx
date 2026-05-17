@@ -38,8 +38,8 @@ export function MarkdownEditor({ className, helperText, onPaste, onDrop, ...prop
     const end = textarea.selectionEnd;
     const before = textarea.value.slice(0, start);
     const after = textarea.value.slice(end);
-    const prefix = before.endsWith("\n") || before.length === 0 ? "" : "\n\n";
-    const suffix = after.startsWith("\n") || after.length === 0 ? "" : "\n\n";
+    const prefix = before.length === 0 || before.endsWith("\n\n") ? "" : before.endsWith("\n") ? "\n" : "\n\n";
+    const suffix = after.length === 0 || after.startsWith("\n\n") ? "" : after.startsWith("\n") ? "\n" : "\n\n";
     const inserted = `${prefix}${markdown}${suffix}`;
 
     textarea.value = `${before}${inserted}${after}`;
@@ -47,6 +47,10 @@ export function MarkdownEditor({ className, helperText, onPaste, onDrop, ...prop
     const cursor = before.length + inserted.length;
     textarea.setSelectionRange(cursor, cursor);
     textarea.dispatchEvent(new Event("input", { bubbles: true }));
+  }
+
+  function imageAltText(fileName?: string) {
+    return (fileName || "圖片").replace(/[\r\n[\]]/g, " ").replace(/\s+/g, " ").trim() || "圖片";
   }
 
   async function uploadImage(file: File) {
@@ -67,7 +71,7 @@ export function MarkdownEditor({ className, helperText, onPaste, onDrop, ...prop
         throw new Error(result.error || `圖片上傳失敗，狀態碼：${response.status}`);
       }
 
-      insertAtCursor(`![${result.fileName || "圖片"}](${result.url})`);
+      insertAtCursor(`![${imageAltText(result.fileName)}](${result.url})`);
       setMessage("圖片已插入 Markdown 內容。");
     } catch (error) {
       setMessage(error instanceof Error ? error.message : "圖片上傳失敗。");

@@ -117,6 +117,21 @@ model UsefulLink {
   @@index([group, sortOrder])
 }
 
+model ContentView {
+  id          String   @id @default(cuid())
+  contentType String
+  contentId   String
+  title       String
+  path        String
+  viewCount   Int      @default(0)
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+
+  @@unique([contentType, contentId])
+  @@index([contentType])
+  @@index([viewCount])
+}
+
 model TeachingTopic {
   id          String           @id @default(cuid())
   title       String

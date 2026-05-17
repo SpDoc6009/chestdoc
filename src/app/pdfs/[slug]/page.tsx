@@ -1,6 +1,7 @@
 import { notFound } from "next/navigation";
 import { RelatedContent } from "@/components/related-content";
 import { Badge } from "@/components/ui/badge";
+import { ViewTracker } from "@/components/view-tracker";
 import { getPublishedPdfBySlug } from "@/lib/data";
 import { formatDate, formatFileSize } from "@/lib/utils";
 
@@ -19,6 +20,7 @@ export default async function PdfDetailPage({ params }: { params: Promise<{ slug
 
   return (
     <main className="section-shell py-10">
+      <ViewTracker contentType="pdf" contentId={pdf.id} title={pdf.title} path={`/pdfs/${pdf.slug}`} />
       <div className="detail-hero">
         <div className="mb-5 flex flex-wrap gap-2">
           <Badge className="border-slate-200 bg-slate-50 text-slate-700">PDF</Badge>

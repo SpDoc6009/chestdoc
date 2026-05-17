@@ -27,7 +27,8 @@ export async function GET() {
     checkStep("pdfs", () => prisma.pdfDocument.findMany({ where: { isPublished: true }, take: 1 })),
     checkStep("pdf_keywords", () => prisma.pdfDocument.findMany({ select: { keywords: true }, take: 1 })),
     checkStep("links", () => prisma.usefulLink.findMany({ take: 1 })),
-    checkStep("categories", () => prisma.category.findMany({ take: 1 }))
+    checkStep("categories", () => prisma.category.findMany({ take: 1 })),
+    checkStep("content_views", () => prisma.contentView.findMany({ take: 1 }))
   ]);
 
   return NextResponse.json({

@@ -11,7 +11,8 @@ const adminNav = [
   { href: "/admin/articles/new?kind=education", label: "新增衛教" },
   { href: "/admin/teaching", label: "教學筆記" },
   { href: "/admin/pdfs", label: "PDF" },
-  { href: "/admin/links", label: "連結" }
+  { href: "/admin/links", label: "連結" },
+  { href: "/admin/stats", label: "統計" }
 ];
 
 export function AdminShell({ title, children }: { title: string; children: React.ReactNode }) {

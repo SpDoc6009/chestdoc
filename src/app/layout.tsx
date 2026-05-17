@@ -17,13 +17,14 @@ function siteUrl() {
 
 export const metadata: Metadata = {
   metadataBase: siteUrl(),
+  applicationName: "一童呼吸",
   title: {
-    default: "胸腔重症間，陪你找回自然的呼吸",
-    template: "%s | 胸腔重症間，陪你找回自然的呼吸"
+    default: "一童呼吸",
+    template: "%s | 一童呼吸"
   },
   description: "胸腔科醫學筆記、指南整理、AI 深度研究報告、衛教資料整理",
   openGraph: {
-    title: "胸腔重症間，陪你找回自然的呼吸",
+    title: "一童呼吸",
     description: "胸腔科醫學筆記、指南整理、AI 深度研究報告、衛教資料整理",
     type: "website",
     locale: "zh_TW",
@@ -32,6 +33,14 @@ export const metadata: Metadata = {
   icons: {
     icon: "/icon.svg",
     apple: "/apple-touch-icon.svg"
+  },
+  appleWebApp: {
+    title: "一童呼吸",
+    capable: true,
+    statusBarStyle: "default"
+  },
+  other: {
+    "apple-mobile-web-app-title": "一童呼吸"
   },
   manifest: "/manifest.webmanifest"
 };
