@@ -9,6 +9,7 @@ const adminNav = [
   { href: "/admin/reports", label: "醫學新知" },
   { href: "/admin/articles", label: "圖文解說" },
   { href: "/admin/articles/new?kind=education", label: "新增衛教" },
+  { href: "/admin/education-qr", label: "衛教 QR Code" },
   { href: "/admin/teaching", label: "教學筆記" },
   { href: "/admin/pdfs", label: "PDF" },
   { href: "/admin/links", label: "連結" },
