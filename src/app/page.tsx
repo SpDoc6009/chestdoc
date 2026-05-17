@@ -183,12 +183,12 @@ export default async function HomePage() {
                     <div className={`h-1 bg-gradient-to-r ${item.accent}`} aria-hidden="true" />
                     <div className="flex h-full flex-col items-center justify-center p-3 text-center sm:block sm:p-4 sm:text-left">
                       <div className="mb-3 flex items-center justify-center gap-3 sm:justify-between">
-                        <span className={`flex h-11 w-11 items-center justify-center rounded-md bg-white/80 shadow-sm sm:h-10 sm:w-10 sm:shadow-none ${item.bg}`}>
-                          <Icon className="h-5 w-5" aria-hidden="true" />
+                        <span className={`flex h-12 w-12 items-center justify-center rounded-md bg-white/80 shadow-sm sm:h-10 sm:w-10 sm:shadow-none ${item.bg}`}>
+                          <Icon className="h-7 w-7 sm:h-5 sm:w-5" aria-hidden="true" />
                         </span>
                         <ArrowRight className="hidden h-4 w-4 text-slate-400 transition-transform group-hover:translate-x-1 group-hover:text-primary sm:block" aria-hidden="true" />
                       </div>
-                      <h2 className="text-sm font-semibold leading-6 text-slate-950 sm:text-base">{item.title}</h2>
+                      <h2 className="text-base font-semibold leading-6 text-slate-950 sm:text-base">{item.title}</h2>
                       <p className="mt-2 hidden text-sm leading-6 text-muted-foreground sm:line-clamp-2 sm:block">{item.description}</p>
                     </div>
                   </Link>
