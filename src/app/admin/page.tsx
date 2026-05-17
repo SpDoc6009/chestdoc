@@ -8,22 +8,31 @@ export const metadata = {
   title: "後台管理"
 };
 
+async function safeCount(label: string, task: () => Promise<number>) {
+  try {
+    return { label, value: await task(), ok: true };
+  } catch (error) {
+    console.error(`Failed to load admin count: ${label}`, error);
+    return { label, value: 0, ok: false };
+  }
+}
+
 export default async function AdminPage() {
   await requireAdmin();
   const [categories, articles, reports, pdfs, links] = await Promise.all([
-    prisma.category.count(),
-    prisma.article.count(),
-    prisma.htmlReport.count(),
-    prisma.pdfDocument.count(),
-    prisma.usefulLink.count()
+    safeCount("分類", () => prisma.category.count()),
+    safeCount("圖文解說", () => prisma.article.count()),
+    safeCount("醫學新知", () => prisma.htmlReport.count()),
+    safeCount("PDF", () => prisma.pdfDocument.count()),
+    safeCount("連結", () => prisma.usefulLink.count())
   ]);
 
   const stats = [
-    { label: "分類", value: categories, href: "/admin/categories" },
-    { label: "圖文解說", value: articles, href: "/admin/articles" },
-    { label: "醫學新知", value: reports, href: "/admin/reports" },
-    { label: "PDF", value: pdfs, href: "/admin/pdfs" },
-    { label: "連結", value: links, href: "/admin/links" }
+    { ...categories, href: "/admin/categories" },
+    { ...articles, href: "/admin/articles" },
+    { ...reports, href: "/admin/reports" },
+    { ...pdfs, href: "/admin/pdfs" },
+    { ...links, href: "/admin/links" }
   ];
 
   return (
@@ -36,8 +45,9 @@ export default async function AdminPage() {
             </CardHeader>
             <CardContent>
               <Link href={stat.href} className="text-3xl font-semibold text-primary hover:underline">
-                {stat.value}
+                {stat.ok ? stat.value : "!"}
               </Link>
+              {!stat.ok ? <p className="mt-2 text-xs leading-5 text-red-600">暫時無法讀取，請稍後重整。</p> : null}
             </CardContent>
           </Card>
         ))}
