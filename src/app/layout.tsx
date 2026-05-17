@@ -31,8 +31,12 @@ export const metadata: Metadata = {
     images: [{ url: "/images/lung-main.png", width: 1366, height: 768 }]
   },
   icons: {
-    icon: "/icon.svg",
-    apple: "/apple-touch-icon.svg"
+    icon: [
+      { url: "/icon-192.png?v=20260517", sizes: "192x192", type: "image/png" },
+      { url: "/icon-512.png?v=20260517", sizes: "512x512", type: "image/png" },
+      { url: "/icon.svg", type: "image/svg+xml" }
+    ],
+    apple: [{ url: "/apple-touch-icon.png?v=20260517", sizes: "180x180", type: "image/png" }]
   },
   appleWebApp: {
     title: "一童呼吸",
@@ -42,7 +46,7 @@ export const metadata: Metadata = {
   other: {
     "apple-mobile-web-app-title": "一童呼吸"
   },
-  manifest: "/manifest.webmanifest"
+  manifest: "/manifest.webmanifest?v=20260517"
 };
 
 export const dynamic = "force-dynamic";
@@ -86,6 +90,9 @@ export default function RootLayout({ children }: Readonly<{ children: React.Reac
   return (
     <html lang="zh-Hant">
       <head>
+        <meta name="application-name" content="一童呼吸" />
+        <meta name="apple-mobile-web-app-title" content="一童呼吸" />
+        <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png?v=20260517" />
         <ChunkReloadGuard />
       </head>
       <body>
