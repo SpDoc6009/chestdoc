@@ -1,6 +1,6 @@
 import Link from "next/link";
 import Image from "next/image";
-import { Activity, ClipboardList, HeartPulse, Home, Pill, Stethoscope } from "lucide-react";
+import { ClipboardList, HeartPulse, Home, Pill, Stethoscope } from "lucide-react";
 import { ContentCard } from "@/components/content-card";
 import { Card, CardContent } from "@/components/ui/card";
 import { prisma } from "@/lib/prisma";
@@ -10,11 +10,34 @@ export const metadata = {
 };
 
 const educationTopics = [
-  { title: "認識疾病", query: "認識疾病", icon: Stethoscope, color: "bg-blue-50 text-blue-700" },
-  { title: "檢查前後", query: "檢查", icon: ClipboardList, color: "bg-cyan-50 text-cyan-700" },
-  { title: "藥物與治療", query: "治療", icon: Pill, color: "bg-indigo-50 text-indigo-700" },
-  { title: "居家照護", query: "居家照護", icon: Home, color: "bg-emerald-50 text-emerald-700" },
-  { title: "何時要就醫", query: "就醫", icon: Activity, color: "bg-rose-50 text-rose-700" }
+  {
+    title: "認識疾病",
+    query: "認識疾病",
+    icon: Stethoscope,
+    color: "bg-white/85 text-blue-700",
+    surface: "border-blue-100 bg-blue-50/95"
+  },
+  {
+    title: "檢查前後",
+    query: "檢查",
+    icon: ClipboardList,
+    color: "bg-white/85 text-cyan-700",
+    surface: "border-cyan-100 bg-cyan-50/95"
+  },
+  {
+    title: "藥物與治療",
+    query: "治療",
+    icon: Pill,
+    color: "bg-white/85 text-indigo-700",
+    surface: "border-indigo-100 bg-indigo-50/95"
+  },
+  {
+    title: "居家照護",
+    query: "居家照護",
+    icon: Home,
+    color: "bg-white/85 text-rose-700",
+    surface: "border-rose-100 bg-rose-50/95"
+  }
 ];
 
 function audienceLabel(keywords: string[]) {
@@ -73,20 +96,20 @@ export default async function EducationPage() {
           <div className="mb-5 flex items-center justify-between">
             <h2 className="section-title">衛教主題入口</h2>
           </div>
-          <div className="grid gap-3 sm:grid-cols-2 lg:grid-cols-5">
+          <div className="grid grid-cols-2 gap-3 lg:grid-cols-4">
             {educationTopics.map((topic) => {
               const Icon = topic.icon;
               return (
                 <Link
                   key={topic.title}
                   href={`/search?q=${encodeURIComponent(topic.query)}&type=education`}
-                  className="group rounded-lg border border-border bg-white p-4 shadow-sm transition-all duration-200 hover:-translate-y-0.5 hover:border-blue-200 hover:shadow-md"
+                  className={`group flex aspect-square flex-col items-center justify-center rounded-lg border p-3 text-center shadow-sm transition-all duration-200 hover:-translate-y-0.5 hover:border-blue-200 hover:bg-white hover:shadow-md sm:p-5 ${topic.surface}`}
                 >
-                  <span className={`mb-3 flex h-10 w-10 items-center justify-center rounded-md ${topic.color}`}>
-                    <Icon className="h-5 w-5" aria-hidden="true" />
+                  <span className={`mb-3 flex h-14 w-14 items-center justify-center rounded-md shadow-sm sm:h-16 sm:w-16 ${topic.color}`}>
+                    <Icon className="h-8 w-8 sm:h-9 sm:w-9" aria-hidden="true" />
                   </span>
-                  <span className="block font-semibold text-slate-900">{topic.title}</span>
-                  <span className="mt-2 block text-sm leading-6 text-muted-foreground group-hover:text-slate-700">
+                  <span className="block text-lg font-semibold leading-7 text-slate-950 sm:text-xl">{topic.title}</span>
+                  <span className="mt-2 hidden text-sm leading-6 text-muted-foreground group-hover:text-slate-700 sm:block">
                     查看相關衛教內容
                   </span>
                 </Link>
