@@ -1,6 +1,6 @@
 import Link from "next/link";
 import Image from "next/image";
-import { ClipboardList, HeartPulse, Home, Pill, Stethoscope } from "lucide-react";
+import { ClipboardList, HeartPulse, Home, Pill, QrCode, Stethoscope } from "lucide-react";
 import { ContentCard } from "@/components/content-card";
 import { Card, CardContent } from "@/components/ui/card";
 import { prisma } from "@/lib/prisma";
@@ -14,29 +14,37 @@ const educationTopics = [
     title: "認識疾病",
     query: "認識疾病",
     icon: Stethoscope,
-    color: "bg-white/85 text-blue-700",
-    surface: "border-blue-100 bg-blue-50/95"
+    color: "bg-white/90 text-blue-800",
+    surface: "border-blue-200 bg-blue-100"
   },
   {
     title: "檢查前後",
     query: "檢查",
     icon: ClipboardList,
-    color: "bg-white/85 text-cyan-700",
-    surface: "border-cyan-100 bg-cyan-50/95"
+    color: "bg-white/90 text-cyan-800",
+    surface: "border-cyan-200 bg-cyan-100"
   },
   {
     title: "藥物與治療",
     query: "治療",
     icon: Pill,
-    color: "bg-white/85 text-indigo-700",
-    surface: "border-indigo-100 bg-indigo-50/95"
+    color: "bg-white/90 text-indigo-800",
+    surface: "border-indigo-200 bg-indigo-100"
   },
   {
     title: "居家照護",
     query: "居家照護",
     icon: Home,
-    color: "bg-white/85 text-rose-700",
-    surface: "border-rose-100 bg-rose-50/95"
+    color: "bg-white/90 text-rose-800",
+    surface: "border-rose-200 bg-rose-100"
+  },
+  {
+    title: "QR code 列印",
+    href: "/admin/education-qr",
+    query: "",
+    icon: QrCode,
+    color: "bg-white/90 text-emerald-800",
+    surface: "border-emerald-200 bg-emerald-100"
   }
 ];
 
@@ -96,21 +104,21 @@ export default async function EducationPage() {
           <div className="mb-5 flex items-center justify-between">
             <h2 className="section-title">衛教主題入口</h2>
           </div>
-          <div className="grid grid-cols-2 gap-3 lg:grid-cols-4">
+          <div className="grid grid-cols-2 gap-3 md:grid-cols-3 lg:grid-cols-5">
             {educationTopics.map((topic) => {
               const Icon = topic.icon;
               return (
                 <Link
                   key={topic.title}
-                  href={`/search?q=${encodeURIComponent(topic.query)}&type=education`}
-                  className={`group flex aspect-square flex-col items-center justify-center rounded-lg border p-3 text-center shadow-sm transition-all duration-200 hover:-translate-y-0.5 hover:border-blue-200 hover:bg-white hover:shadow-md sm:p-5 ${topic.surface}`}
+                  href={topic.href ?? `/search?q=${encodeURIComponent(topic.query)}&type=education`}
+                  className={`group flex aspect-square flex-col items-center justify-center rounded-[2rem] border p-4 text-center shadow-sm transition-all duration-200 hover:-translate-y-0.5 hover:border-slate-300 hover:bg-white hover:shadow-md sm:p-5 ${topic.surface}`}
                 >
-                  <span className={`mb-3 flex h-14 w-14 items-center justify-center rounded-md shadow-sm sm:h-16 sm:w-16 ${topic.color}`}>
-                    <Icon className="h-8 w-8 sm:h-9 sm:w-9" aria-hidden="true" />
+                  <span className={`mb-4 flex h-16 w-16 items-center justify-center rounded-[1.35rem] shadow-sm sm:h-18 sm:w-18 ${topic.color}`}>
+                    <Icon className="h-9 w-9 sm:h-10 sm:w-10" aria-hidden="true" />
                   </span>
-                  <span className="block text-lg font-semibold leading-7 text-slate-950 sm:text-xl">{topic.title}</span>
-                  <span className="mt-2 hidden text-sm leading-6 text-muted-foreground group-hover:text-slate-700 sm:block">
-                    查看相關衛教內容
+                  <span className="block text-xl font-semibold leading-7 text-slate-950 sm:text-2xl">{topic.title}</span>
+                  <span className="mt-2 hidden text-sm font-medium leading-6 text-slate-600 group-hover:text-slate-700 sm:block">
+                    {topic.href ? "產生病人列印清單" : "查看相關衛教內容"}
                   </span>
                 </Link>
               );

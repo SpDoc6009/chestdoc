@@ -314,7 +314,7 @@ export default async function HomePage() {
               <Stethoscope className="h-4 w-4 text-[#28675b]" aria-hidden="true" />
               Pulmonary Medicine Notebook
             </div>
-            <h1 className="max-w-4xl text-3xl font-semibold leading-[1.35] tracking-normal text-[#1f2623] sm:text-4xl lg:text-5xl">
+            <h1 className="max-w-4xl text-3xl font-semibold leading-[1.35] tracking-normal text-[#7A848D] sm:text-4xl lg:text-5xl">
               胸腔重症間，陪你找回自然的呼吸
             </h1>
             <p className="mt-6 max-w-2xl text-lg leading-8 text-[#5c665f]">
