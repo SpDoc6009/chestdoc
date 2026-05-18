@@ -194,8 +194,8 @@ function HomeMobileNav() {
 
 function HomeSidebarNav() {
   return (
-    <aside className="hidden rounded-[2rem] border border-[#efc7b5] bg-[#F9D9CA] p-5 shadow-sm lg:sticky lg:top-24 lg:block lg:self-start">
-      <p className="text-sm font-semibold text-[#6a716c]">網站導覽</p>
+    <aside className="hidden rounded-[2rem] border border-[#f2d8cb] bg-[#fdebe2] p-5 shadow-sm lg:sticky lg:top-24 lg:block lg:self-start">
+      <p className="text-lg font-semibold text-[#6a716c]">網站導覽</p>
       <nav className="mt-5 space-y-3 text-sm">
         {pageSections.map((item, index) => (
           <a
