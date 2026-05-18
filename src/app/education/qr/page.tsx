@@ -1,18 +1,22 @@
 import Link from "next/link";
 import type { Prisma } from "@prisma/client";
-import { AdminShell } from "@/components/admin-shell";
+import { ArrowLeft, QrCode } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Select } from "@/components/ui/select";
-import { educationTopicKeywords, educationTopicOptions, getEducationTopicKeyword, getEducationTopicValueFromKeywords } from "@/lib/education-topics";
-import { requireAdmin } from "@/lib/auth";
+import {
+  educationTopicKeywords,
+  educationTopicOptions,
+  getEducationTopicKeyword,
+  getEducationTopicValueFromKeywords
+} from "@/lib/education-topics";
 import { prisma } from "@/lib/prisma";
 import { formatDate } from "@/lib/utils";
 
 export const metadata = {
-  title: "衛教 QR Code"
+  title: "衛教 QR Code 列印"
 };
 
 function educationWhere() {
@@ -27,15 +31,14 @@ function educationWhere() {
 
 function topicLabel(keywords: string[]) {
   const value = getEducationTopicValueFromKeywords(keywords);
-  return educationTopicOptions.find((topic) => topic.value === value)?.label ?? "未指定";
+  return educationTopicOptions.find((topic) => topic.value === value)?.label ?? "衛教資料";
 }
 
-export default async function EducationQrPage({
+export default async function PublicEducationQrPage({
   searchParams
 }: {
   searchParams: Promise<{ q?: string; topic?: string }>;
 }) {
-  await requireAdmin();
   const { q = "", topic = "all" } = await searchParams;
   const query = q.trim();
   const topicKeyword = topic === "all" ? undefined : getEducationTopicKeyword(topic);
@@ -65,10 +68,30 @@ export default async function EducationQrPage({
   });
 
   return (
-    <AdminShell title="衛教 QR Code">
+    <main className="section-shell py-10">
+      <Link href="/education" className="mb-6 inline-flex items-center gap-2 text-sm font-medium text-primary hover:underline">
+        <ArrowLeft className="h-4 w-4" aria-hidden="true" />
+        回衛教園區
+      </Link>
+
+      <section className="mb-8 rounded-[2rem] border border-emerald-100 bg-gradient-to-br from-emerald-50 via-white to-[#f7f3ea] p-6 shadow-sm">
+        <div className="flex flex-col gap-4 sm:flex-row sm:items-center sm:justify-between">
+          <div>
+            <div className="mb-4 flex h-14 w-14 items-center justify-center rounded-2xl bg-white text-emerald-800 shadow-sm">
+              <QrCode className="h-8 w-8" aria-hidden="true" />
+            </div>
+            <p className="text-sm font-semibold text-emerald-800">Patient Education QR Code</p>
+            <h1 className="mt-2 text-3xl font-semibold tracking-normal text-slate-950">衛教 QR code 列印</h1>
+            <p className="mt-3 max-w-2xl leading-7 text-slate-600">
+              勾選你需要的衛教文章，就可一起列印QR code使用。
+            </p>
+          </div>
+        </div>
+      </section>
+
       <div className="grid gap-5 lg:grid-cols-[minmax(0,1fr)_18rem]">
         <div className="space-y-5">
-          <Card>
+          <Card className="rounded-3xl">
             <CardHeader>
               <CardTitle>篩選衛教文章</CardTitle>
             </CardHeader>
@@ -92,7 +115,7 @@ export default async function EducationQrPage({
                 <div className="flex items-end gap-2">
                   <Button type="submit">篩選</Button>
                   <Link
-                    href="/admin/education-qr"
+                    href="/education/qr"
                     className="inline-flex h-10 items-center rounded-md border border-border bg-white px-4 text-sm font-medium text-slate-700 hover:bg-blue-50"
                   >
                     清除
@@ -102,7 +125,7 @@ export default async function EducationQrPage({
             </CardContent>
           </Card>
 
-          <form action="/admin/education-qr/print" className="space-y-4">
+          <form action="/education/qr/print" className="space-y-4">
             <div className="flex flex-col gap-3 rounded-3xl border border-border bg-white p-4 shadow-sm sm:flex-row sm:items-center sm:justify-between">
               <div>
                 <p className="text-sm font-medium text-primary">可列印衛教 QR Code</p>
@@ -135,7 +158,7 @@ export default async function EducationQrPage({
                       <span className="mt-2 block text-xs text-slate-500">更新：{formatDate(article.updatedAt)}</span>
                     </span>
                     <Link
-                      href={`/articles/${article.id}?preview=1`}
+                      href={`/articles/${article.id}`}
                       className="hidden shrink-0 text-sm font-medium text-primary hover:underline sm:inline"
                     >
                       預覽
@@ -146,7 +169,7 @@ export default async function EducationQrPage({
             ) : (
               <Card>
                 <CardContent className="pt-5">
-                  <p className="text-sm text-slate-600">目前沒有符合條件的已發布衛教文章。</p>
+                  <p className="text-sm text-slate-600">目前沒有符合條件的衛教文章。</p>
                 </CardContent>
               </Card>
             )}
@@ -155,18 +178,15 @@ export default async function EducationQrPage({
 
         <Card className="h-fit rounded-3xl">
           <CardHeader>
-            <CardTitle>使用方式</CardTitle>
+            <CardTitle>怎麼使用</CardTitle>
           </CardHeader>
           <CardContent className="space-y-3 text-sm leading-6 text-slate-600">
-            <p>1. 先用關鍵字或主題找到文章。</p>
-            <p>2. 勾選這次要給病人的衛教資料。</p>
+            <p>1. 找到你需要的衛教主題。</p>
+            <p>2. 勾選想要列印的文章。</p>
             <p>3. 產生列印版後，可直接列印或另存 PDF。</p>
-            <p className="rounded-2xl bg-[#fbf4eb] p-3 text-[#78513a]">
-              QR code 會連到正式網站文章頁，適合印在門診衛教單或回家閱讀清單上。
-            </p>
           </CardContent>
         </Card>
       </div>
-    </AdminShell>
+    </main>
   );
 }

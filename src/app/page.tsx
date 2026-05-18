@@ -367,7 +367,7 @@ export default async function HomePage() {
           <div className="space-y-10">
             <section id="recent-updates" className="scroll-mt-24">
               <SectionHeading eyebrow="Recent Updates" title="最新更新" href="/search" linkLabel="搜尋更多" />
-              <div className="rounded-[2rem] border border-[#ded8ca] bg-[#fffdf7]/90 p-4 shadow-sm">
+              <div className="rounded-[2rem] border border-[#9db489] bg-[#b4caa0] p-4 shadow-sm">
                 <div className="grid gap-3 md:grid-cols-2 lg:grid-cols-3">
                   {recentUpdates.map((item) => (
                     <Link

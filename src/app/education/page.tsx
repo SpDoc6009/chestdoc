@@ -40,7 +40,7 @@ const educationTopics = [
   },
   {
     title: "QR code 列印",
-    href: "/admin/education-qr",
+    href: "/education/qr",
     query: "",
     icon: QrCode,
     color: "bg-white/90 text-emerald-800",
