@@ -1,5 +1,6 @@
 import Link from "next/link";
 import { notFound } from "next/navigation";
+import { AutoHeightReportFrame } from "@/components/auto-height-report-frame";
 import { RelatedContent } from "@/components/related-content";
 import { Badge } from "@/components/ui/badge";
 import { ViewTracker } from "@/components/view-tracker";
@@ -37,14 +38,7 @@ export default async function ReportDetailPage({ params }: { params: Promise<{ s
         <p className="mt-4 max-w-3xl leading-7 text-muted-foreground">{report.summary}</p>
         <p className="mt-5 text-sm font-medium text-slate-500">更新日期：{formatDate(report.updatedAt)}</p>
       </div>
-      <div className="viewer-frame h-[78vh]">
-        <iframe
-          title={report.title}
-          src={`/reports/${report.id}/content`}
-          sandbox="allow-scripts allow-forms allow-popups"
-          className="h-full w-full"
-        />
-      </div>
+      <AutoHeightReportFrame title={report.title} src={`/reports/${report.id}/content`} reportId={report.id} />
       <RelatedContent
         currentId={report.id}
         categoryId={report.categoryId}
