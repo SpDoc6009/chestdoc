@@ -1,6 +1,7 @@
 import type React from "react";
 import { createReportAction } from "@/lib/actions";
 import { AdminShell } from "@/components/admin-shell";
+import { HtmlImageUploader } from "@/components/html-image-uploader";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Input } from "@/components/ui/input";
@@ -36,7 +37,10 @@ export default async function NewReportPage() {
               <Textarea id="summary" name="summary" required />
             </div>
             <div className="space-y-2">
-              <Label htmlFor="htmlContent">完整 HTML 程式碼</Label>
+              <div className="flex flex-wrap items-center justify-between gap-2">
+                <Label htmlFor="htmlContent">完整 HTML 程式碼</Label>
+                <HtmlImageUploader targetId="htmlContent" />
+              </div>
               <Textarea id="htmlContent" name="htmlContent" required className="min-h-96 font-mono" />
             </div>
             <label className="flex items-center gap-2 text-sm"><input type="checkbox" name="isPublished" defaultChecked />發布</label>
