@@ -9,6 +9,7 @@ import {
   FileText,
   FolderTree,
   HeartPulse,
+  QrCode,
   Stethoscope
 } from "lucide-react";
 import { ContentCard } from "@/components/content-card";
@@ -323,6 +324,26 @@ export default async function HomePage() {
             <div id="quick-search" className="mt-8 max-w-2xl scroll-mt-24">
               <SearchBox />
             </div>
+            <Link
+              href="/education/qr"
+              className="mt-5 flex max-w-3xl flex-col gap-4 rounded-[2rem] border border-[#efc7b5] bg-[#fdebe2]/92 p-4 text-[#4d5a53] shadow-sm backdrop-blur transition-all hover:-translate-y-0.5 hover:border-[#e9bcb7] hover:bg-[#f9d9ca] hover:shadow-md sm:flex-row sm:items-center sm:justify-between"
+            >
+              <span className="flex min-w-0 items-center gap-4">
+                <span className="grid h-12 w-12 shrink-0 place-items-center rounded-[1.25rem] bg-white/90 text-[#8e5551] shadow-sm">
+                  <QrCode className="h-7 w-7" aria-hidden="true" />
+                </span>
+                <span className="min-w-0">
+                  <span className="block text-lg font-semibold tracking-normal text-[#1f2623]">衛教 QR code 列印</span>
+                  <span className="mt-1 block text-sm leading-6 text-[#5c665f]">
+                    勾選需要的衛教文章，一次列印 QR code，方便回家閱讀。
+                  </span>
+                </span>
+              </span>
+              <span className="inline-flex shrink-0 items-center gap-2 rounded-full bg-white/90 px-4 py-2 text-sm font-semibold text-[#2b4c40] shadow-sm">
+                產生列印版
+                <ArrowRight className="h-4 w-4" aria-hidden="true" />
+              </span>
+            </Link>
             <div
               id="quick-links"
               className="mt-10 max-w-3xl scroll-mt-24 rounded-[2rem] border border-[#6fa2b1] p-6 shadow-lg backdrop-blur"
