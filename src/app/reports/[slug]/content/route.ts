@@ -4,6 +4,42 @@ import { getPublishedReportBySlug } from "@/lib/data";
 export const dynamic = "force-dynamic";
 
 function injectResizeScript(html: string, reportId: string) {
+  const style = `
+<style>
+  html,
+  body {
+    max-width: 100%;
+    overflow-x: hidden !important;
+  }
+
+  *,
+  *::before,
+  *::after {
+    box-sizing: border-box;
+  }
+
+  img,
+  svg,
+  canvas,
+  video {
+    max-width: 100% !important;
+    height: auto !important;
+  }
+
+  img.figure-image,
+  .figure-placeholder img {
+    display: block;
+    width: min(100%, 1000px) !important;
+    max-width: 100% !important;
+    height: auto !important;
+    margin: 18px auto;
+    object-fit: contain;
+  }
+
+  table {
+    max-width: 100%;
+  }
+</style>`;
   const script = `
 <script>
 (() => {
@@ -35,12 +71,13 @@ function injectResizeScript(html: string, reportId: string) {
   setTimeout(sendHeight, 1200);
 })();
 </script>`;
+  const injected = `${style}${script}`;
 
   if (/<\/body>/i.test(html)) {
-    return html.replace(/<\/body>/i, `${script}</body>`);
+    return html.replace(/<\/body>/i, `${injected}</body>`);
   }
 
-  return `${html}${script}`;
+  return `${html}${injected}`;
 }
 
 export async function GET(_request: Request, { params }: { params: Promise<{ slug: string }> }) {

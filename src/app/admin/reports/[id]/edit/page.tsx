@@ -1,6 +1,5 @@
 import type React from "react";
 import { notFound } from "next/navigation";
-import { updateReportAction } from "@/lib/actions";
 import { AdminShell } from "@/components/admin-shell";
 import { HtmlImageUploader } from "@/components/html-image-uploader";
 import { Button } from "@/components/ui/button";
@@ -31,7 +30,7 @@ export default async function EditReportPage({ params }: { params: Promise<{ id:
       <Card>
         <CardHeader><CardTitle>{report.title}</CardTitle></CardHeader>
         <CardContent>
-          <form action={updateReportAction} className="grid gap-4">
+          <form action={`/admin/reports/${report.id}/update`} method="post" className="grid gap-4">
             <input type="hidden" name="id" value={report.id} />
             <Field name="title" label="標題" defaultValue={report.title} required />
             <Field name="slug" label="Slug" defaultValue={report.slug} required />
