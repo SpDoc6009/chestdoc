@@ -3,7 +3,7 @@ import { ArrowLeft } from "lucide-react";
 import { PrintButton } from "@/components/print-button";
 import { Card, CardContent } from "@/components/ui/card";
 import { prisma } from "@/lib/prisma";
-import { createQrSvg } from "@/lib/qr-code";
+import { createQrImageUrl } from "@/lib/qr-image";
 import { getSiteUrl } from "@/lib/site-url";
 
 export const metadata = {
@@ -16,14 +16,6 @@ function idsFromSearchParams(ids?: string | string[]) {
     .flatMap((value) => value.split(","))
     .map((value) => value.trim())
     .filter(Boolean);
-}
-
-function qrSvg(url: string) {
-  try {
-    return createQrSvg(url, { quietZone: 3, cellSize: 2 });
-  } catch {
-    return "";
-  }
 }
 
 export default async function PublicEducationQrPrintPage({
@@ -72,7 +64,7 @@ export default async function PublicEducationQrPrintPage({
           <div className="grid gap-3 sm:grid-cols-2 print:grid-cols-2 print:gap-3">
             {articles.map((article) => {
               const url = new URL(`/articles/${article.id}`, siteUrl).toString();
-              const svg = qrSvg(url);
+              const qrImageUrl = createQrImageUrl(url);
 
               return (
                 <article
@@ -84,13 +76,12 @@ export default async function PublicEducationQrPrintPage({
                       <h2 className="text-lg font-semibold leading-snug text-slate-950 print:text-base">{article.title}</h2>
                     </div>
                     <div className="w-36 shrink-0 rounded-xl border border-slate-200 bg-white p-2 print:w-32 print:p-1.5">
-                      {svg ? (
-                        <div dangerouslySetInnerHTML={{ __html: svg }} />
-                      ) : (
-                        <div className="flex aspect-square items-center justify-center text-center text-xs text-slate-500">
-                          網址太長，無法產生 QR
-                        </div>
-                      )}
+                      {/* eslint-disable-next-line @next/next/no-img-element */}
+                      <img
+                        src={qrImageUrl}
+                        alt={`${article.title} QR code`}
+                        className="aspect-square h-auto w-full"
+                      />
                     </div>
                   </div>
                 </article>
