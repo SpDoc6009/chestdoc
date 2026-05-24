@@ -3,14 +3,20 @@ import { RelatedContent } from "@/components/related-content";
 import { Badge } from "@/components/ui/badge";
 import { ViewTracker } from "@/components/view-tracker";
 import { getPublishedPdfBySlug } from "@/lib/data";
+import { createSocialMetadata } from "@/lib/social-metadata";
 import { formatDate, formatFileSize } from "@/lib/utils";
 
 export async function generateMetadata({ params }: { params: Promise<{ slug: string }> }) {
   const { slug } = await params;
   const pdf = await getPublishedPdfBySlug(slug);
-  return {
-    title: pdf?.title ?? "PDF 文件"
-  };
+  if (!pdf) return { title: "PDF 文件" };
+
+  return createSocialMetadata({
+    title: pdf.title,
+    description: pdf.description,
+    path: `/pdfs/${pdf.slug}`,
+    section: "pdf"
+  });
 }
 
 export default async function PdfDetailPage({ params }: { params: Promise<{ slug: string }> }) {

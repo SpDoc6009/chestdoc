@@ -12,6 +12,7 @@ import { ViewTracker } from "@/components/view-tracker";
 import { hasAdminSession } from "@/lib/auth";
 import { getArticleBySlug } from "@/lib/data";
 import { createHeadingIdFactory, extractMarkdownHeadings } from "@/lib/markdown";
+import { createSocialMetadata, firstMarkdownImage } from "@/lib/social-metadata";
 import { formatDate } from "@/lib/utils";
 
 type PageProps = {
@@ -27,9 +28,15 @@ function reactNodeText(children: ReactNode): string {
 export async function generateMetadata({ params }: { params: Promise<{ slug: string }> }) {
   const { slug } = await params;
   const article = await getArticleBySlug(slug);
-  return {
-    title: article?.title ?? "圖文解說"
-  };
+  if (!article) return { title: "圖文解說" };
+
+  return createSocialMetadata({
+    title: article.title,
+    description: article.summary,
+    path: `/articles/${article.slug}`,
+    section: "article",
+    image: firstMarkdownImage(article.content)
+  });
 }
 
 export default async function ArticleDetailPage({ params }: PageProps) {

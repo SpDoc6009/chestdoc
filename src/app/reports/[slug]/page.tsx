@@ -5,14 +5,21 @@ import { RelatedContent } from "@/components/related-content";
 import { Badge } from "@/components/ui/badge";
 import { ViewTracker } from "@/components/view-tracker";
 import { getPublishedReportBySlug } from "@/lib/data";
+import { createSocialMetadata, firstHtmlImage } from "@/lib/social-metadata";
 import { formatDate } from "@/lib/utils";
 
 export async function generateMetadata({ params }: { params: Promise<{ slug: string }> }) {
   const { slug } = await params;
   const report = await getPublishedReportBySlug(slug);
-  return {
-    title: report?.title ?? "醫學新知"
-  };
+  if (!report) return { title: "醫學新知" };
+
+  return createSocialMetadata({
+    title: report.title,
+    description: report.summary,
+    path: `/reports/${report.slug}`,
+    section: "report",
+    image: firstHtmlImage(report.htmlContent)
+  });
 }
 
 export default async function ReportDetailPage({ params }: { params: Promise<{ slug: string }> }) {

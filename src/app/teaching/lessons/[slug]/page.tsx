@@ -12,6 +12,7 @@ import { ViewTracker } from "@/components/view-tracker";
 import { hasAdminSession } from "@/lib/auth";
 import { getTeachingLessonBySlug } from "@/lib/data";
 import { createHeadingIdFactory, extractMarkdownHeadings } from "@/lib/markdown";
+import { createSocialMetadata, firstHtmlImage, firstMarkdownImage } from "@/lib/social-metadata";
 import { formatDate } from "@/lib/utils";
 
 type PageProps = {
@@ -28,7 +29,15 @@ function reactNodeText(children: ReactNode): string {
 export async function generateMetadata({ params }: { params: Promise<{ slug: string }> }) {
   const { slug } = await params;
   const lesson = await getTeachingLessonBySlug(slug);
-  return { title: lesson?.title ?? "教學筆記" };
+  if (!lesson) return { title: "教學筆記" };
+
+  return createSocialMetadata({
+    title: lesson.title,
+    description: lesson.summary,
+    path: `/teaching/lessons/${lesson.slug}`,
+    section: "teaching",
+    image: firstMarkdownImage(lesson.markdownContent) ?? firstHtmlImage(lesson.htmlContent)
+  });
 }
 
 export default async function TeachingLessonPage({ params, searchParams }: PageProps) {
