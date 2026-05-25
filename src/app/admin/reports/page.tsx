@@ -51,7 +51,7 @@ export default async function AdminReportsPage() {
                       <Link className="text-sm font-medium text-primary hover:underline" href={`/admin/reports/${report.id}/edit`}>
                         編輯
                       </Link>
-                      <Link className="text-sm font-medium text-primary hover:underline" href={`/reports/${report.slug}`}>
+                      <Link className="text-sm font-medium text-primary hover:underline" href={`/r/${report.id}`}>
                         查看
                       </Link>
                       <form action={deleteReportAction}>

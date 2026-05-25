@@ -6,12 +6,14 @@ import remarkGfm from "remark-gfm";
 import { MarkdownCallout } from "@/components/markdown-callout";
 import { PrintButton } from "@/components/print-button";
 import { RelatedContent } from "@/components/related-content";
+import { ShareButton } from "@/components/share-button";
 import { Badge } from "@/components/ui/badge";
 import { TableOfContents } from "@/components/table-of-contents";
 import { ViewTracker } from "@/components/view-tracker";
 import { hasAdminSession } from "@/lib/auth";
 import { getTeachingLessonBySlug } from "@/lib/data";
 import { createHeadingIdFactory, extractMarkdownHeadings } from "@/lib/markdown";
+import { getSharePath } from "@/lib/share-url";
 import { createSocialMetadata, firstHtmlImage, firstMarkdownImage } from "@/lib/social-metadata";
 import { formatDate } from "@/lib/utils";
 
@@ -34,7 +36,7 @@ export async function generateMetadata({ params }: { params: Promise<{ slug: str
   return createSocialMetadata({
     title: lesson.title,
     description: lesson.summary,
-    path: `/teaching/lessons/${lesson.slug}`,
+    path: getSharePath("teaching", lesson.id),
     section: "teaching",
     image: firstMarkdownImage(lesson.markdownContent) ?? firstHtmlImage(lesson.htmlContent)
   });
@@ -53,10 +55,11 @@ export default async function TeachingLessonPage({ params, searchParams }: PageP
 
   return (
     <main className="section-shell py-10">
-      <ViewTracker contentType="teaching" contentId={lesson.id} title={lesson.title} path={`/teaching/lessons/${lesson.slug}`} />
+      <ViewTracker contentType="teaching" contentId={lesson.id} title={lesson.title} path={getSharePath("teaching", lesson.id)} />
       <article className={hasHtml ? "" : "mx-auto max-w-3xl"}>
         <div className="detail-hero">
-          <div className="absolute right-6 top-6 z-20">
+          <div className="absolute right-6 top-6 z-20 flex gap-2">
+            <ShareButton title={lesson.title} path={getSharePath("teaching", lesson.id)} />
             <PrintButton />
           </div>
           <div className="mb-5 flex flex-wrap gap-2">

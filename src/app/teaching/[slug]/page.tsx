@@ -29,7 +29,7 @@ export default async function TeachingTopicPage({ params }: { params: Promise<{ 
         {topic.lessons.map((lesson) => (
           <ContentCard
             key={lesson.id}
-            href={`/teaching/lessons/${lesson.slug}`}
+            href={`/t/${lesson.id}`}
             title={lesson.title}
             summary={lesson.summary}
             date={lesson.updatedAt}

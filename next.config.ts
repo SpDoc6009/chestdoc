@@ -1,6 +1,14 @@
 import type { NextConfig } from "next";
 
 const nextConfig: NextConfig = {
+  async rewrites() {
+    return [
+      { source: "/a/:id", destination: "/articles/:id" },
+      { source: "/r/:id", destination: "/reports/:id" },
+      { source: "/p/:id", destination: "/pdfs/:id" },
+      { source: "/t/:id", destination: "/teaching/lessons/:id" }
+    ];
+  },
   eslint: {
     ignoreDuringBuilds: true
   },

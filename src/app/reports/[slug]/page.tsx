@@ -2,9 +2,11 @@ import Link from "next/link";
 import { notFound } from "next/navigation";
 import { AutoHeightReportFrame } from "@/components/auto-height-report-frame";
 import { RelatedContent } from "@/components/related-content";
+import { ShareButton } from "@/components/share-button";
 import { Badge } from "@/components/ui/badge";
 import { ViewTracker } from "@/components/view-tracker";
 import { getPublishedReportBySlug } from "@/lib/data";
+import { getSharePath } from "@/lib/share-url";
 import { createSocialMetadata, firstHtmlImage } from "@/lib/social-metadata";
 import { formatDate } from "@/lib/utils";
 
@@ -16,7 +18,7 @@ export async function generateMetadata({ params }: { params: Promise<{ slug: str
   return createSocialMetadata({
     title: report.title,
     description: report.summary,
-    path: `/reports/${report.slug}`,
+    path: getSharePath("report", report.id),
     section: "report",
     image: firstHtmlImage(report.htmlContent)
   });
@@ -29,8 +31,11 @@ export default async function ReportDetailPage({ params }: { params: Promise<{ s
 
   return (
     <main className="section-shell py-10">
-      <ViewTracker contentType="report" contentId={report.id} title={report.title} path={`/reports/${report.slug}`} />
+      <ViewTracker contentType="report" contentId={report.id} title={report.title} path={getSharePath("report", report.id)} />
       <div className="detail-hero">
+        <div className="absolute right-6 top-6 z-20">
+          <ShareButton title={report.title} path={getSharePath("report", report.id)} />
+        </div>
         <div className="mb-5 flex flex-wrap gap-2">
           <Badge className="border-indigo-100 bg-indigo-50 text-indigo-800">Medical Update</Badge>
           {report.category ? <Badge>{report.category.name}</Badge> : null}

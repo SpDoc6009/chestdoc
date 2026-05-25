@@ -66,7 +66,7 @@ export default async function EducationQrPrintPage({
           </div>
           <div className="grid gap-3 sm:grid-cols-2 print:grid-cols-2 print:gap-3">
             {articles.map((article) => {
-              const url = new URL(`/articles/${article.slug}`, siteUrl).toString();
+              const url = new URL(`/a/${article.id}`, siteUrl).toString();
               const qrImageUrl = createQrImageUrl(url);
 
               return (

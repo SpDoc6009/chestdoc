@@ -38,7 +38,7 @@ export default async function ArticlesPage() {
           {articles.map((article) => (
             <ContentCard
               key={article.id}
-              href={`/articles/${article.slug}`}
+              href={`/a/${article.id}`}
               title={article.title}
             summary={article.summary}
             date={article.updatedAt}

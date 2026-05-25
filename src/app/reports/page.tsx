@@ -40,7 +40,7 @@ export default async function ReportsPage() {
           {reports.map((report) => (
             <ContentCard
               key={report.id}
-              href={`/reports/${report.slug}`}
+              href={`/r/${report.id}`}
               title={report.title}
             summary={report.summary}
             date={report.updatedAt}

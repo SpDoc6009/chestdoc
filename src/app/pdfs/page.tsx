@@ -20,7 +20,7 @@ export default async function PdfsPage() {
         {pdfs.map((pdf) => (
           <ContentCard
             key={pdf.id}
-            href={`/pdfs/${pdf.slug}`}
+            href={`/p/${pdf.id}`}
             title={pdf.title}
             summary={pdf.description}
             date={pdf.updatedAt}

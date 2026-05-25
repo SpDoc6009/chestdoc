@@ -7,11 +7,13 @@ import { MarkdownCallout } from "@/components/markdown-callout";
 import { PrintButton } from "@/components/print-button";
 import { RelatedContent } from "@/components/related-content";
 import { Badge } from "@/components/ui/badge";
+import { ShareButton } from "@/components/share-button";
 import { TableOfContents } from "@/components/table-of-contents";
 import { ViewTracker } from "@/components/view-tracker";
 import { hasAdminSession } from "@/lib/auth";
 import { getArticleBySlug } from "@/lib/data";
 import { createHeadingIdFactory, extractMarkdownHeadings } from "@/lib/markdown";
+import { getSharePath } from "@/lib/share-url";
 import { createSocialMetadata, firstMarkdownImage } from "@/lib/social-metadata";
 import { formatDate } from "@/lib/utils";
 
@@ -33,7 +35,7 @@ export async function generateMetadata({ params }: { params: Promise<{ slug: str
   return createSocialMetadata({
     title: article.title,
     description: article.summary,
-    path: `/articles/${article.slug}`,
+    path: getSharePath("article", article.id),
     section: "article",
     image: firstMarkdownImage(article.content)
   });
@@ -48,10 +50,11 @@ export default async function ArticleDetailPage({ params }: PageProps) {
 
   return (
     <main className="section-shell py-10">
-      <ViewTracker contentType="article" contentId={article.id} title={article.title} path={`/articles/${article.slug}`} />
+      <ViewTracker contentType="article" contentId={article.id} title={article.title} path={getSharePath("article", article.id)} />
       <article className="mx-auto max-w-6xl">
         <div className="detail-hero">
-          <div className="absolute right-6 top-6 z-20">
+          <div className="absolute right-6 top-6 z-20 flex gap-2">
+            <ShareButton title={article.title} path={getSharePath("article", article.id)} />
             <PrintButton />
           </div>
           <div className="mb-5 flex flex-wrap gap-2">

@@ -1,8 +1,10 @@
 import { notFound } from "next/navigation";
 import { RelatedContent } from "@/components/related-content";
+import { ShareButton } from "@/components/share-button";
 import { Badge } from "@/components/ui/badge";
 import { ViewTracker } from "@/components/view-tracker";
 import { getPublishedPdfBySlug } from "@/lib/data";
+import { getSharePath } from "@/lib/share-url";
 import { createSocialMetadata } from "@/lib/social-metadata";
 import { formatDate, formatFileSize } from "@/lib/utils";
 
@@ -14,7 +16,7 @@ export async function generateMetadata({ params }: { params: Promise<{ slug: str
   return createSocialMetadata({
     title: pdf.title,
     description: pdf.description,
-    path: `/pdfs/${pdf.slug}`,
+    path: getSharePath("pdf", pdf.id),
     section: "pdf"
   });
 }
@@ -26,8 +28,11 @@ export default async function PdfDetailPage({ params }: { params: Promise<{ slug
 
   return (
     <main className="section-shell py-10">
-      <ViewTracker contentType="pdf" contentId={pdf.id} title={pdf.title} path={`/pdfs/${pdf.slug}`} />
+      <ViewTracker contentType="pdf" contentId={pdf.id} title={pdf.title} path={getSharePath("pdf", pdf.id)} />
       <div className="detail-hero">
+        <div className="absolute right-6 top-6 z-20">
+          <ShareButton title={pdf.title} path={getSharePath("pdf", pdf.id)} />
+        </div>
         <div className="mb-5 flex flex-wrap gap-2">
           <Badge className="border-slate-200 bg-slate-50 text-slate-700">PDF</Badge>
           {pdf.category ? <Badge>{pdf.category.name}</Badge> : null}

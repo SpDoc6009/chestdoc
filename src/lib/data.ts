@@ -47,8 +47,13 @@ export function getPublishedReportBySlug(slug: string) {
 }
 
 export function getPublishedPdfBySlug(slug: string) {
+  const encodedSlug = encodeURIComponent(slug);
+  const decodedSlug = decodeURIComponent(slug);
   return prisma.pdfDocument.findFirst({
-    where: { slug, isPublished: true },
+    where: {
+      isPublished: true,
+      OR: [{ slug }, { slug: encodedSlug }, { slug: decodedSlug }, { id: slug }]
+    },
     include: { category: true, subcategory: true }
   });
 }

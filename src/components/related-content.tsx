@@ -58,7 +58,7 @@ export async function RelatedContent({ currentId, categoryId, subcategoryId, key
   const items = [
     ...articles.map((item) => ({
       id: item.id,
-      href: `/articles/${item.slug}`,
+      href: `/a/${item.id}`,
       title: item.title,
       summary: item.summary,
       date: item.updatedAt,
@@ -68,7 +68,7 @@ export async function RelatedContent({ currentId, categoryId, subcategoryId, key
     })),
     ...reports.map((item) => ({
       id: item.id,
-      href: `/reports/${item.slug}`,
+      href: `/r/${item.id}`,
       title: item.title,
       summary: item.summary,
       date: item.updatedAt,
@@ -78,7 +78,7 @@ export async function RelatedContent({ currentId, categoryId, subcategoryId, key
     })),
     ...lessons.map((item) => ({
       id: item.id,
-      href: `/teaching/lessons/${item.slug}`,
+      href: `/t/${item.id}`,
       title: item.title,
       summary: item.summary,
       date: item.updatedAt,
@@ -88,7 +88,7 @@ export async function RelatedContent({ currentId, categoryId, subcategoryId, key
     })),
     ...pdfs.map((item) => ({
       id: item.id,
-      href: `/pdfs/${item.slug}`,
+      href: `/p/${item.id}`,
       title: item.title,
       summary: item.description,
       date: item.updatedAt,

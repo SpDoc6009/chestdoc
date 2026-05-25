@@ -149,7 +149,7 @@ export default async function EducationPage() {
             {articles.map((article) => (
               <Link
                 key={article.id}
-                href={`/articles/${article.slug}`}
+                href={`/a/${article.id}`}
                 className="group flex min-h-64 flex-col rounded-[2rem] border border-[#ead8ca] bg-[#fffdf8] p-5 shadow-sm transition-all hover:-translate-y-0.5 hover:border-[#e4c3b1] hover:shadow-md"
               >
                 <div className="mb-5 flex items-center justify-between gap-3">

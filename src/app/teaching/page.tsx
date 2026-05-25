@@ -71,7 +71,7 @@ export default async function TeachingPage() {
                   {topic.lessons.map((lesson) => (
                     <Link
                       key={lesson.id}
-                      href={`/teaching/lessons/${lesson.slug}`}
+                      href={`/t/${lesson.id}`}
                       className="flex items-center gap-2 rounded-md border border-border bg-white px-3 py-2 text-sm transition-colors hover:border-blue-200 hover:bg-blue-50"
                     >
                       <BookOpenCheck className="h-4 w-4 shrink-0 text-primary" aria-hidden="true" />

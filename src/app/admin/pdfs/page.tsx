@@ -44,7 +44,7 @@ export default async function AdminPdfsPage() {
                       <Link className="text-sm font-medium text-primary hover:underline" href={`/admin/pdfs/${pdf.id}/edit`}>
                         編輯
                       </Link>
-                      <Link className="text-sm font-medium text-primary hover:underline" href={`/pdfs/${pdf.slug}`}>
+                      <Link className="text-sm font-medium text-primary hover:underline" href={`/p/${pdf.id}`}>
                         查看
                       </Link>
                       <form action={deletePdfAction}>

@@ -136,7 +136,7 @@ export default async function EducationQrPage({
                       <span className="mt-2 block text-xs text-slate-500">更新：{formatDate(article.updatedAt)}</span>
                     </span>
                     <Link
-                      href={`/articles/${article.slug}?preview=1`}
+                      href={`/a/${article.id}?preview=1`}
                       className="hidden shrink-0 text-sm font-medium text-primary hover:underline sm:inline"
                     >
                       預覽
