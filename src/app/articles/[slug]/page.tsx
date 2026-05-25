@@ -48,7 +48,7 @@ export default async function ArticleDetailPage({ params }: PageProps) {
 
   return (
     <main className="section-shell py-10">
-      <ViewTracker contentType="article" contentId={article.id} title={article.title} path={`/articles/${article.id}`} />
+      <ViewTracker contentType="article" contentId={article.id} title={article.title} path={`/articles/${article.slug}`} />
       <article className="mx-auto max-w-6xl">
         <div className="detail-hero">
           <div className="absolute right-6 top-6 z-20">

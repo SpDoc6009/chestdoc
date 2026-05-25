@@ -50,6 +50,7 @@ export default async function AdminArticlesPage({
     orderBy: { updatedAt: "desc" },
     select: {
       id: true,
+      slug: true,
       title: true,
       isPublished: true,
       updatedAt: true,
@@ -135,7 +136,7 @@ export default async function AdminArticlesPage({
                       <Link className="text-sm font-medium text-primary hover:underline" href={`/admin/articles/${article.id}/edit`}>
                         編輯
                       </Link>
-                      <Link className="text-sm font-medium text-primary hover:underline" href={`/articles/${article.id}?preview=1`}>
+                      <Link className="text-sm font-medium text-primary hover:underline" href={`/articles/${article.slug}?preview=1`}>
                         查看
                       </Link>
                       <form action={deleteArticleAction}>

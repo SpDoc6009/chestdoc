@@ -60,6 +60,7 @@ export default async function PublicEducationQrPage({
     orderBy: [{ updatedAt: "desc" }, { title: "asc" }],
     select: {
       id: true,
+      slug: true,
       title: true,
       summary: true,
       updatedAt: true,
@@ -158,7 +159,7 @@ export default async function PublicEducationQrPage({
                       <span className="mt-2 block text-xs text-slate-500">更新：{formatDate(article.updatedAt)}</span>
                     </span>
                     <Link
-                      href={`/articles/${article.id}`}
+                      href={`/articles/${article.slug}`}
                       className="hidden shrink-0 text-sm font-medium text-primary hover:underline sm:inline"
                     >
                       預覽

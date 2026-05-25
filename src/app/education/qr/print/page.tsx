@@ -36,6 +36,7 @@ export default async function PublicEducationQrPrintPage({
         orderBy: { title: "asc" },
         select: {
           id: true,
+          slug: true,
           title: true
         }
       })
@@ -63,7 +64,7 @@ export default async function PublicEducationQrPrintPage({
           </div>
           <div className="grid gap-3 sm:grid-cols-2 print:grid-cols-2 print:gap-3">
             {articles.map((article) => {
-              const url = new URL(`/articles/${article.id}`, siteUrl).toString();
+              const url = new URL(`/articles/${article.slug}`, siteUrl).toString();
               const qrImageUrl = createQrImageUrl(url);
 
               return (

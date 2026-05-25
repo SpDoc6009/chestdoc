@@ -288,9 +288,9 @@ export default async function HomePage() {
     popularKeywords: []
   };
   const recentUpdates = [
-    ...articles.slice(0, 3).map((item) => ({ title: item.title, href: `/articles/${item.id}`, date: item.updatedAt, type: "圖文解說" })),
+    ...articles.slice(0, 3).map((item) => ({ title: item.title, href: `/articles/${item.slug}`, date: item.updatedAt, type: "圖文解說" })),
     ...reports.slice(0, 3).map((item) => ({ title: item.title, href: `/reports/${item.slug}`, date: item.updatedAt, type: "醫學新知" })),
-    ...teachingLessons.slice(0, 2).map((item) => ({ title: item.title, href: `/teaching/lessons/${item.id}`, date: item.updatedAt, type: "教學筆記" })),
+    ...teachingLessons.slice(0, 2).map((item) => ({ title: item.title, href: `/teaching/lessons/${item.slug}`, date: item.updatedAt, type: "教學筆記" })),
     ...pdfs.slice(0, 2).map((item) => ({ title: item.title, href: `/pdfs/${item.slug}`, date: item.updatedAt, type: "PDF" }))
   ]
     .sort((a, b) => b.date.getTime() - a.date.getTime())
@@ -446,7 +446,7 @@ export default async function HomePage() {
                   {educationArticles.map((article) => (
                     <ContentCard
                       key={article.id}
-                      href={`/articles/${article.id}`}
+                      href={`/articles/${article.slug}`}
                       title={article.title}
                       summary={article.summary}
                       date={article.updatedAt}
@@ -465,7 +465,7 @@ export default async function HomePage() {
                 {articles.map((article) => (
                   <ContentCard
                     key={article.id}
-                    href={`/articles/${article.id}`}
+                    href={`/articles/${article.slug}`}
                     title={article.title}
                     summary={article.summary}
                     date={article.updatedAt}
@@ -501,7 +501,7 @@ export default async function HomePage() {
                 {teachingLessons.map((lesson) => (
                   <ContentCard
                     key={lesson.id}
-                    href={`/teaching/lessons/${lesson.id}`}
+                    href={`/teaching/lessons/${lesson.slug}`}
                     title={lesson.title}
                     summary={lesson.summary}
                     date={lesson.updatedAt}

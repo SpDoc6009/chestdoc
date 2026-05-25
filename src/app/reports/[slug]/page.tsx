@@ -29,7 +29,7 @@ export default async function ReportDetailPage({ params }: { params: Promise<{ s
 
   return (
     <main className="section-shell py-10">
-      <ViewTracker contentType="report" contentId={report.id} title={report.title} path={`/reports/${report.id}`} />
+      <ViewTracker contentType="report" contentId={report.id} title={report.title} path={`/reports/${report.slug}`} />
       <div className="detail-hero">
         <div className="mb-5 flex flex-wrap gap-2">
           <Badge className="border-indigo-100 bg-indigo-50 text-indigo-800">Medical Update</Badge>

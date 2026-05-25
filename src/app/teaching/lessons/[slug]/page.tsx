@@ -53,7 +53,7 @@ export default async function TeachingLessonPage({ params, searchParams }: PageP
 
   return (
     <main className="section-shell py-10">
-      <ViewTracker contentType="teaching" contentId={lesson.id} title={lesson.title} path={`/teaching/lessons/${lesson.id}`} />
+      <ViewTracker contentType="teaching" contentId={lesson.id} title={lesson.title} path={`/teaching/lessons/${lesson.slug}`} />
       <article className={hasHtml ? "" : "mx-auto max-w-3xl"}>
         <div className="detail-hero">
           <div className="absolute right-6 top-6 z-20">

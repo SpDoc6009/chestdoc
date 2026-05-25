@@ -117,7 +117,7 @@ export default async function SearchPage({ searchParams }: { searchParams: Searc
   const results: SearchResult[] = [
     ...articles.map((item) => ({
       id: item.id,
-      href: `/articles/${item.id}`,
+      href: `/articles/${item.slug}`,
       title: item.title,
       summary: item.summary,
       type: "圖文解說",
@@ -127,7 +127,7 @@ export default async function SearchPage({ searchParams }: { searchParams: Searc
     })),
     ...reports.map((item) => ({
       id: item.id,
-      href: `/reports/${item.id}`,
+      href: `/reports/${item.slug}`,
       title: item.title,
       summary: item.summary,
       type: "醫學新知",
@@ -137,7 +137,7 @@ export default async function SearchPage({ searchParams }: { searchParams: Searc
     })),
     ...teachingLessons.map((item) => ({
       id: item.id,
-      href: `/teaching/lessons/${item.id}`,
+      href: `/teaching/lessons/${item.slug}`,
       title: item.title,
       summary: item.summary,
       type: "教學筆記",
