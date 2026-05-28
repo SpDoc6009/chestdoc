@@ -1,6 +1,5 @@
 import type React from "react";
 import { notFound } from "next/navigation";
-import { updatePdfAction } from "@/lib/actions";
 import { AdminShell } from "@/components/admin-shell";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
@@ -33,7 +32,7 @@ export default async function EditPdfPage({ params }: { params: Promise<{ id: st
           <CardTitle>{pdf.title}</CardTitle>
         </CardHeader>
         <CardContent>
-          <form action={updatePdfAction} className="grid gap-4">
+          <form action={`/admin/pdfs/${pdf.id}/update`} method="post" className="grid gap-4">
             <input type="hidden" name="id" value={pdf.id} />
             <Field name="title" label="標題" defaultValue={pdf.title} required />
             <Field name="slug" label="Slug" defaultValue={pdf.slug} required />

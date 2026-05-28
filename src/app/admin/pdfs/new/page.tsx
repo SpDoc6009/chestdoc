@@ -1,5 +1,4 @@
 import type React from "react";
-import { createPdfAction } from "@/lib/actions";
 import { AdminShell } from "@/components/admin-shell";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
@@ -23,7 +22,7 @@ export default async function NewPdfPage() {
       <Card>
         <CardHeader><CardTitle>PDF 資訊</CardTitle></CardHeader>
         <CardContent>
-          <form action={createPdfAction} className="grid gap-4">
+          <form action="/admin/pdfs/create" method="post" encType="multipart/form-data" className="grid gap-4">
             <Field name="title" label="標題" required />
             <Field name="slug" label="Slug" placeholder="可留空自動產生" />
             <Field name="keywords" label="關鍵字" placeholder="例如：guideline, COPD, 衛教" />
