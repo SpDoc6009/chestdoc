@@ -1,6 +1,7 @@
 import { notFound } from "next/navigation";
 import ReactMarkdown from "react-markdown";
 import remarkGfm from "remark-gfm";
+import { AutoHeightReportFrame } from "@/components/auto-height-report-frame";
 import { Badge } from "@/components/ui/badge";
 import { requireAdmin } from "@/lib/auth";
 import { prisma } from "@/lib/prisma";
@@ -42,14 +43,11 @@ export default async function AdminTeachingPreviewPage({ params }: { params: Pro
         ) : null}
 
         {hasHtml ? (
-          <div className="mt-8 h-[82vh] overflow-hidden rounded-lg border border-border bg-white">
-            <iframe
-              title={lesson.title}
-              src={`/admin/teaching/preview/${lesson.id}/content`}
-              sandbox="allow-scripts allow-forms allow-popups"
-              className="h-full w-full"
-            />
-          </div>
+          <AutoHeightReportFrame
+            title={lesson.title}
+            src={`/admin/teaching/preview/${lesson.id}/content`}
+            reportId={lesson.id}
+          />
         ) : null}
       </article>
     </main>

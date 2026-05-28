@@ -3,6 +3,7 @@ import type { ReactNode } from "react";
 import { notFound } from "next/navigation";
 import ReactMarkdown from "react-markdown";
 import remarkGfm from "remark-gfm";
+import { AutoHeightReportFrame } from "@/components/auto-height-report-frame";
 import { MarkdownCallout } from "@/components/markdown-callout";
 import { PrintButton } from "@/components/print-button";
 import { RelatedContent } from "@/components/related-content";
@@ -108,14 +109,7 @@ export default async function TeachingLessonPage({ params, searchParams }: PageP
         ) : null}
 
         {hasHtml ? (
-          <div className="viewer-frame h-[82vh]">
-            <iframe
-              title={lesson.title}
-              src={iframeSrc}
-              sandbox="allow-scripts allow-forms allow-popups"
-              className="h-full w-full"
-            />
-          </div>
+          <AutoHeightReportFrame title={lesson.title} src={iframeSrc} reportId={lesson.id} />
         ) : null}
         <RelatedContent currentId={lesson.id} keywords={lesson.keywords} />
       </article>
