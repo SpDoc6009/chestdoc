@@ -20,6 +20,7 @@ export async function GET() {
   const checks = await Promise.all([
     checkStep("articles", () => prisma.article.findMany({ where: { isPublished: true }, take: 1 })),
     checkStep("article_keywords", () => prisma.article.findMany({ select: { keywords: true }, take: 1 })),
+    checkStep("article_html", () => prisma.article.findMany({ select: { htmlContent: true }, take: 1 })),
     checkStep("reports", () => prisma.htmlReport.findMany({ where: { isPublished: true }, take: 1 })),
     checkStep("report_keywords", () => prisma.htmlReport.findMany({ select: { keywords: true }, take: 1 })),
     checkStep("teaching", () => prisma.teachingLesson.findMany({ where: { isPublished: true }, take: 1 })),

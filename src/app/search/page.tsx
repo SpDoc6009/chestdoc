@@ -55,6 +55,7 @@ export default async function SearchPage({ searchParams }: { searchParams: Searc
               { title: { contains: query, mode: "insensitive" } },
               { summary: { contains: query, mode: "insensitive" } },
               { content: { contains: query, mode: "insensitive" } },
+              { htmlContent: { contains: query, mode: "insensitive" } },
               ...keywordFilters
             ]
           },

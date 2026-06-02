@@ -69,6 +69,7 @@ export default async function EducationPage() {
         { title: { contains: "衛教", mode: "insensitive" } },
         { summary: { contains: "衛教", mode: "insensitive" } },
         { content: { contains: "衛教", mode: "insensitive" } },
+        { htmlContent: { contains: "衛教", mode: "insensitive" } },
         { keywords: { has: "衛教" } },
         { keywords: { has: "patient-education" } }
       ]

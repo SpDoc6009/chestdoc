@@ -175,14 +175,18 @@ export async function updateSubcategoryAction(formData: FormData) {
 export async function createArticleAction(formData: FormData) {
   await requireAdmin();
   const title = value(formData, "title");
+  const content = value(formData, "content");
+  const htmlContent = value(formData, "htmlContent");
   if (!title) throw new Error("Article title is required.");
+  if (!content && !htmlContent) throw new Error("Markdown or HTML content is required.");
 
   await prisma.article.create({
     data: {
       title,
       slug: await uniqueSlug("article", title, value(formData, "slug")),
       summary: value(formData, "summary"),
-      content: value(formData, "content"),
+      content,
+      htmlContent: nullable(htmlContent),
       keywords: keywords(formData),
       categoryId: nullable(value(formData, "categoryId")),
       subcategoryId: nullable(value(formData, "subcategoryId")),
@@ -203,7 +207,10 @@ export async function updateArticleAction(formData: FormData) {
   const id = value(formData, "id");
   const title = value(formData, "title");
   const slug = slugify(value(formData, "slug") || title);
+  const content = value(formData, "content");
+  const htmlContent = value(formData, "htmlContent");
   if (!id || !title || !slug) throw new Error("Article id, title and slug are required.");
+  if (!content && !htmlContent) throw new Error("Markdown or HTML content is required.");
 
   await prisma.article.update({
     where: { id },
@@ -211,7 +218,8 @@ export async function updateArticleAction(formData: FormData) {
       title,
       slug,
       summary: value(formData, "summary"),
-      content: value(formData, "content"),
+      content,
+      htmlContent: nullable(htmlContent),
       keywords: keywords(formData),
       categoryId: nullable(value(formData, "categoryId")),
       subcategoryId: nullable(value(formData, "subcategoryId")),

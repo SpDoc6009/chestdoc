@@ -46,6 +46,7 @@ model Article {
   slug          String       @unique
   summary       String
   content       String
+  htmlContent   String?
   keywords      String[]     @default([])
   categoryId    String?
   subcategoryId String?

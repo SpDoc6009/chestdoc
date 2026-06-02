@@ -1,6 +1,7 @@
 import type React from "react";
 import { notFound } from "next/navigation";
 import { AdminShell } from "@/components/admin-shell";
+import { HtmlImageUploader } from "@/components/html-image-uploader";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Input } from "@/components/ui/input";
@@ -47,7 +48,14 @@ export default async function EditArticlePage({ params }: { params: Promise<{ id
             </div>
             <div className="space-y-2">
               <Label htmlFor="content">Markdown 內容</Label>
-              <MarkdownEditor id="content" name="content" required className="min-h-96" defaultValue={article.content} />
+              <MarkdownEditor id="content" name="content" className="min-h-96" defaultValue={article.content} helperText="Markdown 或 HTML 擇一填寫；兩欄都填時會先顯示 Markdown，再顯示 HTML。" />
+            </div>
+            <div className="space-y-2">
+              <div className="flex flex-wrap items-center justify-between gap-2">
+                <Label htmlFor="htmlContent">HTML 程式碼</Label>
+                <HtmlImageUploader targetId="htmlContent" />
+              </div>
+              <Textarea id="htmlContent" name="htmlContent" className="min-h-96 font-mono" defaultValue={article.htmlContent ?? ""} />
             </div>
             <div className="flex flex-wrap gap-5 text-sm">
               <label className="flex items-center gap-2"><input type="checkbox" name="isPublished" defaultChecked={article.isPublished} />發布</label>

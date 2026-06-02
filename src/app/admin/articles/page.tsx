@@ -40,7 +40,8 @@ export default async function AdminArticlesPage({
           OR: [
             { title: { contains: query, mode: "insensitive" } },
             { summary: { contains: query, mode: "insensitive" } },
-            { content: { contains: query, mode: "insensitive" } }
+            { content: { contains: query, mode: "insensitive" } },
+            { htmlContent: { contains: query, mode: "insensitive" } }
           ]
         }
       : {})

@@ -47,7 +47,8 @@ export default async function EducationQrPage({
       OR: [
         { title: { contains: query, mode: "insensitive" } },
         { summary: { contains: query, mode: "insensitive" } },
-        { content: { contains: query, mode: "insensitive" } }
+        { content: { contains: query, mode: "insensitive" } },
+        { htmlContent: { contains: query, mode: "insensitive" } }
       ]
     });
   }

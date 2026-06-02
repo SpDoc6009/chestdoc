@@ -38,8 +38,10 @@ export async function POST(request: NextRequest, { params }: { params: Promise<{
   const [{ id }, formData] = await Promise.all([params, request.formData()]);
   const title = value(formData, "title");
   const slug = slugify(value(formData, "slug") || title);
+  const content = value(formData, "content");
+  const htmlContent = value(formData, "htmlContent");
 
-  if (!id || !title || !slug) {
+  if (!id || !title || !slug || (!content && !htmlContent)) {
     return NextResponse.redirect(new URL("/admin/articles?error=missing-fields", request.url), 303);
   }
 
@@ -49,7 +51,8 @@ export async function POST(request: NextRequest, { params }: { params: Promise<{
       title,
       slug,
       summary: value(formData, "summary"),
-      content: value(formData, "content"),
+      content,
+      htmlContent: nullable(htmlContent),
       keywords: keywords(formData),
       categoryId: nullable(value(formData, "categoryId")),
       subcategoryId: nullable(value(formData, "subcategoryId")),

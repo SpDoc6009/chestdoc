@@ -50,7 +50,8 @@ export default async function PublicEducationQrPage({
       OR: [
         { title: { contains: query, mode: "insensitive" } },
         { summary: { contains: query, mode: "insensitive" } },
-        { content: { contains: query, mode: "insensitive" } }
+        { content: { contains: query, mode: "insensitive" } },
+        { htmlContent: { contains: query, mode: "insensitive" } }
       ]
     });
   }
