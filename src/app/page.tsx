@@ -315,6 +315,51 @@ function ChapterCard({ card }: { card: (typeof chapterCards)[number] }) {
   );
 }
 
+function recentUpdateTone(type: string) {
+  if (type === "醫學新知") {
+    return {
+      card: "border-[#bfd3d8] bg-[#e4eef1]/86 hover:border-[#8db3be] hover:bg-[#f6fbfc]",
+      lead: "border-[#8db3be] bg-gradient-to-br from-[#e4eef1] via-[#f4f9fa] to-[#fffdf7]",
+      icon: "bg-[#d1e2e7] text-[#4f7180]",
+      chip: "bg-[#d1e2e7] text-[#4f7180]"
+    };
+  }
+
+  if (type === "衛教園區") {
+    return {
+      card: "border-[#e9bcb7] bg-[#f9d9ca]/84 hover:border-[#d99f99] hover:bg-[#fff5f0]",
+      lead: "border-[#d99f99] bg-gradient-to-br from-[#f9d9ca] via-[#fff0e9] to-[#fffdf7]",
+      icon: "bg-[#f1c6bd] text-[#8e5551]",
+      chip: "bg-[#f1c6bd] text-[#8e5551]"
+    };
+  }
+
+  if (type === "教學筆記") {
+    return {
+      card: "border-[#e5d59b] bg-[#f4e7bd]/82 hover:border-[#cfba75] hover:bg-[#fff8de]",
+      lead: "border-[#cfba75] bg-gradient-to-br from-[#f4e7bd] via-[#fff7dd] to-[#fffdf7]",
+      icon: "bg-[#ead895] text-[#7a662c]",
+      chip: "bg-[#ead895] text-[#7a662c]"
+    };
+  }
+
+  if (type === "PDF") {
+    return {
+      card: "border-[#d1c9dc] bg-[#eee8f3]/84 hover:border-[#b8acc8] hover:bg-[#fbf8fd]",
+      lead: "border-[#b8acc8] bg-gradient-to-br from-[#eee8f3] via-[#faf7fc] to-[#fffdf7]",
+      icon: "bg-[#ded6e8] text-[#6b5f7a]",
+      chip: "bg-[#ded6e8] text-[#6b5f7a]"
+    };
+  }
+
+  return {
+    card: "border-[#e7c6ad] bg-[#f8e4d1]/84 hover:border-[#d8ad89] hover:bg-[#fff4e8]",
+    lead: "border-[#d8ad89] bg-gradient-to-br from-[#f8e4d1] via-[#fff2e3] to-[#fffdf7]",
+    icon: "bg-[#efd1b4] text-[#8a5c38]",
+    chip: "bg-[#efd1b4] text-[#8a5c38]"
+  };
+}
+
 export default async function HomePage() {
   const homeData = await getHomeData().catch((error) => {
     console.error("Failed to load home data", error);
@@ -423,26 +468,59 @@ export default async function HomePage() {
           <div className="space-y-10">
             <section id="recent-updates" className="scroll-mt-24">
               <SectionHeading eyebrow="Recent Updates" title="最新更新" href="/search" linkLabel="搜尋更多" />
-              <div className="rounded-[2rem] border border-[#bfd0ad] bg-[#d4dfc7] p-4 shadow-sm">
+              <div className="rounded-[2.25rem] border border-[#c1d2b2] bg-gradient-to-br from-[#d4dfc7] via-[#edf2e4] to-[#fff8f0] p-4 shadow-sm">
                 <div className="grid gap-3 md:grid-cols-2 lg:grid-cols-3">
-                  {recentUpdates.map((item) => (
-                    <Link
-                      key={`${item.type}-${item.href}`}
-                      href={item.href}
-                      className="group flex gap-3 rounded-[1.5rem] border border-transparent p-3 transition-colors hover:border-[#c4d6c3] hover:bg-[#f2eee5]"
-                    >
-                      <span className="flex h-10 w-10 shrink-0 items-center justify-center rounded-full bg-[#e9e5dc] text-[#28675b]">
-                        <Clock3 className="h-4 w-4" aria-hidden="true" />
-                      </span>
-                      <span className="min-w-0">
-                        <span className="mb-1 flex flex-wrap items-center gap-2 text-xs text-[#6a716c]">
-                          <span>{item.type}</span>
-                          <span>{formatDate(item.date)}</span>
+                  {recentUpdates.map((item, index) => {
+                    const isLead = index === 0;
+                    const tone = recentUpdateTone(item.type);
+                    return (
+                      <Link
+                        key={`${item.type}-${item.href}`}
+                        href={item.href}
+                        className={
+                          isLead
+                            ? `group flex flex-col justify-between gap-5 rounded-[1.9rem] border p-5 shadow-sm transition-all hover:-translate-y-0.5 hover:shadow-md md:col-span-2 lg:col-span-3 lg:flex-row lg:items-center ${tone.lead}`
+                            : `group flex gap-3 rounded-[1.5rem] border p-3 transition-all hover:-translate-y-0.5 ${tone.card}`
+                        }
+                      >
+                        <span className={isLead ? "flex min-w-0 items-start gap-4" : "flex min-w-0 gap-3"}>
+                          <span
+                            className={
+                              isLead
+                                ? `flex h-14 w-14 shrink-0 items-center justify-center rounded-[1.25rem] shadow-sm ${tone.icon}`
+                                : `flex h-10 w-10 shrink-0 items-center justify-center rounded-full ${tone.icon}`
+                            }
+                          >
+                            <Clock3 className={isLead ? "h-6 w-6" : "h-4 w-4"} aria-hidden="true" />
+                          </span>
+                          <span className="min-w-0">
+                            <span className="mb-2 flex flex-wrap items-center gap-2 text-xs font-medium text-[#6a716c]">
+                              {isLead ? (
+                                <span className={`rounded-full px-2.5 py-1 ${tone.chip}`}>最新一筆</span>
+                              ) : null}
+                              <span>{item.type}</span>
+                              <span>{formatDate(item.date)}</span>
+                            </span>
+                            <span
+                              className={
+                                isLead
+                                  ? "line-clamp-2 text-xl font-semibold leading-8 text-[#1f2623] group-hover:text-[#28675b]"
+                                  : "line-clamp-2 text-sm font-medium leading-6 text-[#1f2623] group-hover:text-[#28675b]"
+                              }
+                            >
+                              {item.title}
+                            </span>
+                          </span>
                         </span>
-                        <span className="line-clamp-2 text-sm font-medium leading-6 text-[#1f2623] group-hover:text-[#28675b]">{item.title}</span>
-                      </span>
-                    </Link>
-                  ))}
+                        {isLead ? (
+                          <span className="inline-flex shrink-0 items-center gap-2 self-start rounded-full border border-white/70 bg-white/85 px-4 py-2 text-sm font-semibold text-[#28675b] shadow-sm lg:self-auto">
+                            立即閱讀
+                            <ArrowRight className="h-4 w-4 transition-transform group-hover:translate-x-1" aria-hidden="true" />
+                          </span>
+                        ) : null}
+                      </Link>
+                    );
+                  })}
                 </div>
               </div>
 
