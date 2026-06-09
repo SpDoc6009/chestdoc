@@ -163,6 +163,47 @@ async function getHomeData() {
     })
   ]);
 
+  const [latestArticles, latestReports, latestTeachingLessons, latestPdfs] = await Promise.all([
+    prisma.article.findMany({
+      where: { isPublished: true },
+      orderBy: { updatedAt: "desc" },
+      take: 12,
+      select: { id: true, title: true, updatedAt: true, keywords: true }
+    }),
+    prisma.htmlReport.findMany({
+      where: { isPublished: true },
+      orderBy: { updatedAt: "desc" },
+      take: 12,
+      select: { id: true, title: true, updatedAt: true }
+    }),
+    prisma.teachingLesson.findMany({
+      where: { isPublished: true },
+      orderBy: { updatedAt: "desc" },
+      take: 12,
+      select: { id: true, title: true, updatedAt: true }
+    }),
+    prisma.pdfDocument.findMany({
+      where: { isPublished: true },
+      orderBy: { updatedAt: "desc" },
+      take: 12,
+      select: { id: true, title: true, updatedAt: true }
+    })
+  ]);
+
+  const recentUpdates = [
+    ...latestArticles.map((item) => ({
+      title: item.title,
+      href: `/a/${item.id}`,
+      date: item.updatedAt,
+      type: item.keywords.includes("衛教") || item.keywords.includes("patient-education") ? "衛教園區" : "圖文解說"
+    })),
+    ...latestReports.map((item) => ({ title: item.title, href: `/r/${item.id}`, date: item.updatedAt, type: "醫學新知" })),
+    ...latestTeachingLessons.map((item) => ({ title: item.title, href: `/t/${item.id}`, date: item.updatedAt, type: "教學筆記" })),
+    ...latestPdfs.map((item) => ({ title: item.title, href: `/p/${item.id}`, date: item.updatedAt, type: "PDF" }))
+  ]
+    .sort((a, b) => b.date.getTime() - a.date.getTime())
+    .slice(0, 9);
+
   const keywordCounts = new Map<string, number>();
   for (const item of [...keywordArticles, ...keywordReports, ...keywordLessons, ...keywordPdfs]) {
     for (const keyword of item.keywords) {
@@ -174,7 +215,7 @@ async function getHomeData() {
     .slice(0, 12)
     .map(([keyword, count]) => ({ keyword, count }));
 
-  return { articles, educationArticles, reports, teachingLessons, pdfs, links, popularKeywords };
+  return { articles, educationArticles, reports, teachingLessons, pdfs, links, popularKeywords, recentUpdates };
 }
 
 function HomeMobileNav() {
@@ -279,23 +320,16 @@ export default async function HomePage() {
     console.error("Failed to load home data", error);
     return null;
   });
-  const { articles, educationArticles, reports, teachingLessons, pdfs, links, popularKeywords } = homeData ?? {
+  const { articles, educationArticles, reports, teachingLessons, pdfs, links, popularKeywords, recentUpdates } = homeData ?? {
     articles: [],
     educationArticles: [],
     reports: [],
     teachingLessons: [],
     pdfs: [],
     links: [],
-    popularKeywords: []
+    popularKeywords: [],
+    recentUpdates: []
   };
-  const recentUpdates = [
-    ...articles.slice(0, 3).map((item) => ({ title: item.title, href: `/a/${item.id}`, date: item.updatedAt, type: "圖文解說" })),
-    ...reports.slice(0, 3).map((item) => ({ title: item.title, href: `/r/${item.id}`, date: item.updatedAt, type: "醫學新知" })),
-    ...teachingLessons.slice(0, 2).map((item) => ({ title: item.title, href: `/t/${item.id}`, date: item.updatedAt, type: "教學筆記" })),
-    ...pdfs.slice(0, 2).map((item) => ({ title: item.title, href: `/p/${item.id}`, date: item.updatedAt, type: "PDF" }))
-  ]
-    .sort((a, b) => b.date.getTime() - a.date.getTime())
-    .slice(0, 6);
 
   return (
     <main className="bg-[#f7f4ec] text-[#1f2623]">
