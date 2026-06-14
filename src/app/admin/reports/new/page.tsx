@@ -2,6 +2,7 @@ import type React from "react";
 import { createReportAction } from "@/lib/actions";
 import { AdminShell } from "@/components/admin-shell";
 import { HtmlImageUploader } from "@/components/html-image-uploader";
+import { MarkdownEditor } from "@/components/markdown-editor";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Input } from "@/components/ui/input";
@@ -42,6 +43,15 @@ export default async function NewReportPage() {
                 <HtmlImageUploader targetId="htmlContent" />
               </div>
               <Textarea id="htmlContent" name="htmlContent" required className="min-h-96 font-mono" />
+            </div>
+            <div className="space-y-2">
+              <Label htmlFor="markdownContent">Markdown 補充內容</Label>
+              <MarkdownEditor
+                id="markdownContent"
+                name="markdownContent"
+                className="min-h-72"
+                helperText="可選填：會顯示在 HTML 內容下方，適合補充重點、參考資料或延伸閱讀。"
+              />
             </div>
             <label className="flex items-center gap-2 text-sm"><input type="checkbox" name="isPublished" defaultChecked />發布</label>
             <Button type="submit">建立醫學新知</Button>

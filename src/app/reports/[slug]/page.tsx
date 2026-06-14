@@ -1,13 +1,16 @@
 import Link from "next/link";
 import { notFound } from "next/navigation";
+import ReactMarkdown from "react-markdown";
+import remarkGfm from "remark-gfm";
 import { AutoHeightReportFrame } from "@/components/auto-height-report-frame";
+import { MarkdownCallout } from "@/components/markdown-callout";
 import { RelatedContent } from "@/components/related-content";
 import { ShareButton } from "@/components/share-button";
 import { Badge } from "@/components/ui/badge";
 import { ViewTracker } from "@/components/view-tracker";
 import { getPublishedReportBySlug } from "@/lib/data";
 import { getSharePath } from "@/lib/share-url";
-import { createSocialMetadata, firstHtmlImage } from "@/lib/social-metadata";
+import { createSocialMetadata, firstHtmlImage, firstMarkdownImage } from "@/lib/social-metadata";
 import { formatDate } from "@/lib/utils";
 
 export async function generateMetadata({ params }: { params: Promise<{ slug: string }> }) {
@@ -20,7 +23,7 @@ export async function generateMetadata({ params }: { params: Promise<{ slug: str
     description: report.summary,
     path: getSharePath("report", report.id),
     section: "report",
-    image: firstHtmlImage(report.htmlContent)
+    image: firstHtmlImage(report.htmlContent) ?? firstMarkdownImage(report.markdownContent)
   });
 }
 
@@ -28,6 +31,7 @@ export default async function ReportDetailPage({ params }: { params: Promise<{ s
   const { slug } = await params;
   const report = await getPublishedReportBySlug(slug);
   if (!report) notFound();
+  const hasMarkdown = Boolean(report.markdownContent?.trim());
 
   return (
     <main className="section-shell py-10">
@@ -51,6 +55,20 @@ export default async function ReportDetailPage({ params }: { params: Promise<{ s
         <p className="mt-5 text-sm font-medium text-slate-500">更新日期：{formatDate(report.updatedAt)}</p>
       </div>
       <AutoHeightReportFrame title={report.title} src={`/reports/${report.id}/content`} reportId={report.id} />
+      {hasMarkdown ? (
+        <section className="reader-prose mx-auto mt-10 max-w-3xl">
+          <ReactMarkdown
+            remarkPlugins={[remarkGfm]}
+            components={{
+              blockquote({ children }) {
+                return <MarkdownCallout>{children}</MarkdownCallout>;
+              }
+            }}
+          >
+            {report.markdownContent ?? ""}
+          </ReactMarkdown>
+        </section>
+      ) : null}
       <RelatedContent
         currentId={report.id}
         categoryId={report.categoryId}

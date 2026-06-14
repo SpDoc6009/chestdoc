@@ -63,19 +63,20 @@ model Article {
 }
 
 model HtmlReport {
-  id            String       @id @default(cuid())
-  title         String
-  slug          String       @unique
-  summary       String
-  htmlContent   String
-  keywords      String[]     @default([])
-  categoryId    String?
-  subcategoryId String?
-  category      Category?    @relation(fields: [categoryId], references: [id], onDelete: SetNull)
-  subcategory   Subcategory? @relation(fields: [subcategoryId], references: [id], onDelete: SetNull)
-  isPublished   Boolean      @default(false)
-  createdAt     DateTime     @default(now())
-  updatedAt     DateTime     @updatedAt
+  id              String       @id @default(cuid())
+  title           String
+  slug            String       @unique
+  summary         String
+  htmlContent     String
+  markdownContent String?
+  keywords        String[]     @default([])
+  categoryId      String?
+  subcategoryId   String?
+  category        Category?    @relation(fields: [categoryId], references: [id], onDelete: SetNull)
+  subcategory     Subcategory? @relation(fields: [subcategoryId], references: [id], onDelete: SetNull)
+  isPublished     Boolean      @default(false)
+  createdAt       DateTime     @default(now())
+  updatedAt       DateTime     @updatedAt
 
   @@index([categoryId])
   @@index([subcategoryId])

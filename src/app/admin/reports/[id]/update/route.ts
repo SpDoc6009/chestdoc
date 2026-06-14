@@ -42,6 +42,7 @@ export async function POST(request: NextRequest, { params }: { params: Promise<{
       slug,
       summary: value(formData, "summary"),
       htmlContent: value(formData, "htmlContent"),
+      markdownContent: nullable(value(formData, "markdownContent")),
       keywords: keywords(formData),
       categoryId: nullable(value(formData, "categoryId")),
       subcategoryId: nullable(value(formData, "subcategoryId")),

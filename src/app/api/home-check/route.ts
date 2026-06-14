@@ -23,6 +23,7 @@ export async function GET() {
     checkStep("article_html", () => prisma.article.findMany({ select: { htmlContent: true }, take: 1 })),
     checkStep("reports", () => prisma.htmlReport.findMany({ where: { isPublished: true }, take: 1 })),
     checkStep("report_keywords", () => prisma.htmlReport.findMany({ select: { keywords: true }, take: 1 })),
+    checkStep("report_markdown", () => prisma.htmlReport.findMany({ select: { markdownContent: true }, take: 1 })),
     checkStep("teaching", () => prisma.teachingLesson.findMany({ where: { isPublished: true }, take: 1 })),
     checkStep("teaching_keywords", () => prisma.teachingLesson.findMany({ select: { keywords: true }, take: 1 })),
     checkStep("pdfs", () => prisma.pdfDocument.findMany({ where: { isPublished: true }, take: 1 })),
