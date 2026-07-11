@@ -36,18 +36,18 @@ export default async function AdminTeachingPreviewPage({ params }: { params: Pro
         <p className="mt-4 max-w-3xl leading-7 text-muted-foreground">{lesson.summary}</p>
         <p className="mt-4 text-sm text-muted-foreground">更新日期：{formatDate(lesson.updatedAt)}</p>
 
-        {hasMarkdown ? (
-          <div className="prose prose-slate mt-9 max-w-3xl prose-headings:scroll-mt-24 prose-headings:tracking-normal prose-a:text-primary">
-            <ReactMarkdown remarkPlugins={[remarkGfm]}>{lesson.markdownContent ?? ""}</ReactMarkdown>
-          </div>
-        ) : null}
-
         {hasHtml ? (
           <AutoHeightReportFrame
             title={lesson.title}
             src={`/admin/teaching/preview/${lesson.id}/content`}
             reportId={lesson.id}
           />
+        ) : null}
+
+        {hasMarkdown ? (
+          <div className="prose prose-slate mt-9 max-w-3xl prose-headings:scroll-mt-24 prose-headings:tracking-normal prose-a:text-primary">
+            <ReactMarkdown remarkPlugins={[remarkGfm]}>{lesson.markdownContent ?? ""}</ReactMarkdown>
+          </div>
         ) : null}
       </article>
     </main>

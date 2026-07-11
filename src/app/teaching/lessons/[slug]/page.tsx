@@ -39,7 +39,7 @@ export async function generateMetadata({ params }: { params: Promise<{ slug: str
     description: lesson.summary,
     path: getSharePath("teaching", lesson.id),
     section: "teaching",
-    image: firstMarkdownImage(lesson.markdownContent) ?? firstHtmlImage(lesson.htmlContent)
+    image: firstHtmlImage(lesson.htmlContent) ?? firstMarkdownImage(lesson.markdownContent)
   });
 }
 
@@ -80,6 +80,10 @@ export default async function TeachingLessonPage({ params, searchParams }: PageP
           <p className="mt-5 text-sm font-medium text-slate-500">更新日期：{formatDate(lesson.updatedAt)}</p>
         </div>
 
+        {hasHtml ? (
+          <AutoHeightReportFrame title={lesson.title} src={iframeSrc} reportId={lesson.id} />
+        ) : null}
+
         {hasMarkdown ? (
           <div className={headings.length > 0 ? "mt-10 grid gap-8 lg:grid-cols-[minmax(0,1fr)_260px]" : "mt-10 max-w-3xl"}>
             <div className="reader-prose max-w-3xl">
@@ -106,10 +110,6 @@ export default async function TeachingLessonPage({ params, searchParams }: PageP
             </div>
             <TableOfContents headings={headings} />
           </div>
-        ) : null}
-
-        {hasHtml ? (
-          <AutoHeightReportFrame title={lesson.title} src={iframeSrc} reportId={lesson.id} />
         ) : null}
         <RelatedContent currentId={lesson.id} keywords={lesson.keywords} />
       </article>
