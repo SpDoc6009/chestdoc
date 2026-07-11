@@ -51,12 +51,12 @@ export default async function EditTeachingLessonPage({ params }: { params: Promi
               <Textarea id="summary" name="summary" required defaultValue={lesson.summary} />
             </div>
             <div className="space-y-2">
-              <Label htmlFor="markdownContent">Markdown 圖文內容</Label>
-              <MarkdownEditor id="markdownContent" name="markdownContent" defaultValue={lesson.markdownContent ?? ""} />
-            </div>
-            <div className="space-y-2">
               <Label htmlFor="htmlContent">互動 HTML 程式碼</Label>
               <Textarea id="htmlContent" name="htmlContent" className="min-h-72 font-mono" defaultValue={lesson.htmlContent ?? ""} />
+            </div>
+            <div className="space-y-2">
+              <Label htmlFor="markdownContent">Markdown 圖文內容</Label>
+              <MarkdownEditor id="markdownContent" name="markdownContent" defaultValue={lesson.markdownContent ?? ""} />
             </div>
             <div className="flex flex-wrap gap-5 text-sm">
               <label className="flex items-center gap-2"><input type="checkbox" name="isPublished" defaultChecked={lesson.isPublished} />發布</label>

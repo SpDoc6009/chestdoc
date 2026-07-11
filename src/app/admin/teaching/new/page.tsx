@@ -42,20 +42,20 @@ export default async function NewTeachingLessonPage() {
               <Textarea id="summary" name="summary" required />
             </div>
             <div className="space-y-2">
-              <Label htmlFor="markdownContent">Markdown 圖文內容</Label>
-              <MarkdownEditor
-                id="markdownContent"
-                name="markdownContent"
-                placeholder="可貼 Markdown。若要插圖，可用：![圖片說明](圖片網址)"
-              />
-            </div>
-            <div className="space-y-2">
               <Label htmlFor="htmlContent">互動 HTML 程式碼</Label>
               <Textarea
                 id="htmlContent"
                 name="htmlContent"
                 className="min-h-72 font-mono"
                 placeholder="可貼完整 HTML。若 Markdown 和 HTML 都有內容，前台會兩者都顯示。"
+              />
+            </div>
+            <div className="space-y-2">
+              <Label htmlFor="markdownContent">Markdown 圖文內容</Label>
+              <MarkdownEditor
+                id="markdownContent"
+                name="markdownContent"
+                placeholder="可貼 Markdown。若要插圖，可用：![圖片說明](圖片網址)"
               />
             </div>
             <div className="flex flex-wrap gap-5 text-sm">
