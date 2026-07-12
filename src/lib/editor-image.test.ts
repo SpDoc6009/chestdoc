@@ -44,3 +44,16 @@ for (const pagePath of [
     assert.ok(htmlPosition < markdownPosition, "HTML editor must appear before the Markdown editor");
   });
 }
+
+test("renders article HTML before Markdown on the published page", async () => {
+  const source = await readFile(
+    new URL("../app/articles/[slug]/page.tsx", import.meta.url),
+    "utf8",
+  );
+  const htmlPosition = source.indexOf("<AutoHeightReportFrame");
+  const markdownPosition = source.indexOf("<ReactMarkdown");
+
+  assert.notEqual(htmlPosition, -1);
+  assert.notEqual(markdownPosition, -1);
+  assert.ok(htmlPosition < markdownPosition, "Published HTML must appear before Markdown");
+});

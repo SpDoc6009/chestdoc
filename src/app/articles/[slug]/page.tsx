@@ -38,7 +38,7 @@ export async function generateMetadata({ params }: { params: Promise<{ slug: str
     description: article.summary,
     path: getSharePath("article", article.id),
     section: "article",
-    image: firstMarkdownImage(article.content) ?? firstHtmlImage(article.htmlContent)
+    image: firstHtmlImage(article.htmlContent) ?? firstMarkdownImage(article.content)
   });
 }
 
@@ -75,6 +75,9 @@ export default async function ArticleDetailPage({ params }: PageProps) {
           <p className="mt-4 leading-7 text-muted-foreground">{article.summary}</p>
           <p className="mt-5 text-sm font-medium text-slate-500">更新日期：{formatDate(article.updatedAt)}</p>
         </div>
+        {hasHtml ? (
+          <AutoHeightReportFrame title={article.title} src={`/articles/${article.id}/content`} reportId={article.id} />
+        ) : null}
         {hasMarkdown ? (
           <div className={headings.length > 0 ? "mt-10 grid gap-8 lg:grid-cols-[minmax(0,1fr)_260px]" : "mx-auto mt-10 max-w-3xl"}>
             <div className="reader-prose max-w-3xl">
@@ -101,9 +104,6 @@ export default async function ArticleDetailPage({ params }: PageProps) {
             </div>
             <TableOfContents headings={headings} />
           </div>
-        ) : null}
-        {hasHtml ? (
-          <AutoHeightReportFrame title={article.title} src={`/articles/${article.id}/content`} reportId={article.id} />
         ) : null}
         <RelatedContent
           currentId={article.id}
