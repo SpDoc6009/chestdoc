@@ -1,4 +1,5 @@
 import assert from "node:assert/strict";
+import { readFile } from "node:fs/promises";
 import test from "node:test";
 
 import {
@@ -28,3 +29,18 @@ test("inserts an image block at the current selection", () => {
     cursor: 22,
   });
 });
+
+for (const pagePath of [
+  "../app/admin/articles/new/page.tsx",
+  "../app/admin/articles/[id]/edit/page.tsx",
+]) {
+  test(`places HTML before Markdown in ${pagePath}`, async () => {
+    const source = await readFile(new URL(pagePath, import.meta.url), "utf8");
+    const htmlPosition = source.indexOf('<Label htmlFor="htmlContent">');
+    const markdownPosition = source.indexOf('<Label htmlFor="content">');
+
+    assert.notEqual(htmlPosition, -1);
+    assert.notEqual(markdownPosition, -1);
+    assert.ok(htmlPosition < markdownPosition, "HTML editor must appear before the Markdown editor");
+  });
+}

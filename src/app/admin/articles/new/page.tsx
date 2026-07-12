@@ -46,15 +46,15 @@ export default async function NewArticlePage({ searchParams }: { searchParams: P
               <Textarea id="summary" name="summary" required />
             </div>
             <div className="space-y-2">
-              <Label htmlFor="content">Markdown 內容</Label>
-              <MarkdownEditor id="content" name="content" className="min-h-96" helperText="Markdown 或 HTML 擇一填寫；兩欄都填時會先顯示 Markdown，再顯示 HTML。" />
-            </div>
-            <div className="space-y-2">
               <div className="flex flex-wrap items-center justify-between gap-2">
                 <Label htmlFor="htmlContent">HTML 程式碼</Label>
                 <HtmlImageUploader targetId="htmlContent" />
               </div>
               <Textarea id="htmlContent" name="htmlContent" className="min-h-96 font-mono" />
+            </div>
+            <div className="space-y-2">
+              <Label htmlFor="content">Markdown 內容</Label>
+              <MarkdownEditor id="content" name="content" className="min-h-96" helperText="Markdown 或 HTML 擇一填寫；兩欄都填時會先顯示 Markdown，再顯示 HTML。" />
             </div>
             <Checks featured />
             <Button type="submit">建立圖文解說</Button>
