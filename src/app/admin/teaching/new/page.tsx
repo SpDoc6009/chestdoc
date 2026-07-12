@@ -1,6 +1,7 @@
 import type React from "react";
 import { createTeachingLessonAction } from "@/lib/actions";
 import { AdminShell } from "@/components/admin-shell";
+import { HtmlImageUploader } from "@/components/html-image-uploader";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Input } from "@/components/ui/input";
@@ -43,6 +44,7 @@ export default async function NewTeachingLessonPage() {
             </div>
             <div className="space-y-2">
               <Label htmlFor="htmlContent">互動 HTML 程式碼</Label>
+              <HtmlImageUploader targetId="htmlContent" />
               <Textarea
                 id="htmlContent"
                 name="htmlContent"
